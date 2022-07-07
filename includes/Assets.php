@@ -48,7 +48,6 @@ class Assets
         'src'       => CM_ASSETS . '/admin/admin.js',
         'deps'      => array( 'jquery' ),
         'version'   => filemtime(CM_PLUGIN_PATH . 'assets/admin/admin.js'),
-        //'deps' => ['jquery'],
         'in_footer' => true
       ],
     ];

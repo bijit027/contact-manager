@@ -18,7 +18,7 @@ class Models
 
   public function cm_admin_scripts()
   {
-    wp_localize_script('cm', 'ajax_url', array(
+    wp_localize_script('cm-admin-script', 'ajax_url', array(
       'ajaxurl' => admin_url('admin-ajax.php'),
       'wpsfb_nonce' => wp_create_nonce('wpsfb_ajax_nonce')
     ));
@@ -64,7 +64,7 @@ class Models
     } else {
       return wp_send_json_error("please enter title", 400);
     }
-    
+
     $defaults = [
 
       'name'    => $name,
