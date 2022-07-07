@@ -64,9 +64,7 @@ class Models
     } else {
       return wp_send_json_error("please enter title", 400);
     }
-
-
-
+    
     $defaults = [
 
       'name'    => $name,

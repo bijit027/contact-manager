@@ -68,7 +68,6 @@
 </template>
 
 <script>
-//import $ from 'jquery';
 export default {
     name: "ContactManager",
 
@@ -101,7 +100,7 @@ export default {
         clickDeleteContact: async function (contactID) {
 
             jQuery.ajax({
-                type: "GET",
+                type: "POST",
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
                 data: {
