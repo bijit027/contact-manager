@@ -1,0 +1,19 @@
+{
+    "name": "bijit/contact_manager",
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "autoload": {
+        "psr-4": {
+          "CM\\Includes\\": "includes/"
+        },
+        "files":[ "includes/Functions.php" ]
+      },
+    "authors": [
+        {
+            "name": "bijit027",
+            "email": "bijitdeb70@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
