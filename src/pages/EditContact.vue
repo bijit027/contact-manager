@@ -55,7 +55,6 @@ export default {
     methods: {
         onSubmit() {
             const that = this;
-            console.log(ajax_url.ajaxurl);
             jQuery.ajax({
                 type: "POST",
                 url: ajax_url.ajaxurl,
@@ -71,6 +70,7 @@ export default {
                     title: that.contact.title,
                     wpsfb_nonce: ajax_url.wpsfb_nonce,
                 },
+
                 success: function (data) {
                     that.mydata = data.data;
                     that.$router.push({
@@ -78,9 +78,11 @@ export default {
                     });
                 },
                 error: function (error) {
-                    that.error = error.responseJSON.data;
+                    that.error = error.responseJSON;
                 },
+
             });
+
         }
     },
 }

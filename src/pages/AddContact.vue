@@ -20,7 +20,7 @@ export default {
                 mobile: '',
                 company: '',
                 title: '',
-                button: 'Created'
+                button: 'Create'
 
             },
             error: ''

@@ -112,6 +112,7 @@ final class Contact_Manager
   {
     new \CM\Includes\Assets();
     new \CM\Includes\Models();
+    new \CM\Includes\AdminAjaxHandler();
     if (is_admin()) {
       new \CM\Includes\Admin();
     } else {
