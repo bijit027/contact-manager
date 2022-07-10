@@ -78,7 +78,7 @@ export default {
                     });
                 },
                 error: function (error) {
-                    that.error = error.responseJSON;
+                    that.error = error.responseJSON.data;
                 },
 
             });

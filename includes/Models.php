@@ -5,23 +5,12 @@ namespace CM\Includes;
 
 class Models
 {
-
-  function __construct()
-  {
-    // add_action('wp_ajax_cm_insert_contact_table', [$this, 'cm_insert_contact_table']);
-    // add_action('wp_ajax_cm_get_contacts', [$this, 'cm_get_contacts']);
-    // add_action('wp_ajax_cm_get_contact_lists', [$this, 'cm_get_contact_lists']);
-    //add_action('wp_ajax_cm_get_single_data', [$this, 'cm_get_single_data']);
-    // add_action('wp_ajax_cm_delete_contact', [$this, 'cm_delete_contact']);
-  }
-
-
+/**
+ * Insert data into contact table
+*/
   public static function add_contact_table($name,$photo, $email, $mobile, $company, $title)
   {
-
-
     global $wpdb;
-
     $defaults = [
 
       'name'    => $name,
@@ -32,7 +21,6 @@ class Models
       'title'   => $title,
 
     ];
-  
       $table_name = $wpdb->prefix . 'contacts';
 
       $inserted = $wpdb->insert(
@@ -45,18 +33,18 @@ class Models
       }
       return wp_send_json_success([
         'message' => __("Successfully posted data", "contact-manager")
-      ], 200);
-   
-     
-    
+      ], 200);   
   }
+
+  /**
+   * Update contact table
+  */
 
   public static function update_contact_table($id,$name,$photo, $email, $mobile, $company, $title){
     global $wpdb;
     $table_name   = $wpdb->prefix .  'contacts';
     $where        = ['id' => $id];
 
-    
     $updated      =  $wpdb->update(
       $table_name,
       array(
@@ -78,7 +66,6 @@ class Models
 
   }
 
-
   /**
    * Fetching data for contact table
    */
@@ -93,11 +80,12 @@ class Models
       return false;
     }
     wp_send_json_success($request, 200);
-
     die();
   }
 
-  // Get Single Data
+  /**
+   * Get Single Data
+   */ 
   public static function fetch_single_data($id)
   {
     global $wpdb;
@@ -114,19 +102,13 @@ class Models
     die();
   }
 
-
-
   /**
    * Deleting Table's row
    */
   public static function delete_contact($id)
   {
-
-
     global $wpdb;
-    
     $table_name = $wpdb->prefix . 'contacts';
-
     $wpdb->delete($table_name, array('id' => $id));
     die();
   }

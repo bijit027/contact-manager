@@ -8,23 +8,27 @@ class AdminAjaxHandler
 
   function __construct()
   {
+      // add_action('wp_ajax_cm_insert_contact_table', [$this, 'cm_insert_contact_table']);
+      // add_action('wp_ajax_cm_get_contact_lists', [$this, 'cm_get_contact_lists']);
+      // add_action('wp_ajax_cm_get_single_data', [$this, 'cm_get_single_data']);
+      // add_action('wp_ajax_cm_delete_contact', [$this, 'cm_delete_contact']);
 
+      
 
-
-      add_action('wp_ajax_cm_insert_contact_table', [$this, 'cm_insert_contact_table']);
-      add_action('wp_ajax_cm_get_contact_lists', [$this, 'cm_get_contact_lists']);
-      add_action('wp_ajax_cm_get_single_data', [$this, 'cm_get_single_data']);
-      add_action('wp_ajax_cm_delete_contact', [$this, 'cm_delete_contact']);
+    foreach ($this->get_actions() as $action => $handler) {
+      add_action("wp_ajax_{$action}", $handler['function']);
+    }
   }
 
-//   function get_actions()
-//   {
-//     return [
-//     //   'contact_form' => ['function' => [$this, 'submit_form'], 'nopriv' => true],
-//       'cm_insert_contact_table' => ['function' => [$this, 'handle_add_contacts']],
-
-//     ];
-//   }
+  function get_actions()
+  {
+    return [
+      'cm_insert_contact_table' => ['function' => [$this, 'cm_insert_contact_table']],
+      'cm_get_contact_lists' => ['function' => [$this, 'cm_get_contact_lists']],
+      'cm_get_single_data' => ['function' => [$this, 'cm_get_single_data']],
+      'cm_delete_contact' => ['function' => [$this, 'cm_delete_contact']],
+    ];
+  }
 
 
 
