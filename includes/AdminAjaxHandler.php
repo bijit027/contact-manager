@@ -45,34 +45,42 @@ class AdminAjaxHandler
       if (!empty($_POST['name'])) {
         $name = sanitize_text_field($_POST['name']);
       } else {
-        return wp_send_json_error("please enter name", 400);
+
+        $error = ['name' => 'Please enter name'];
+        return wp_send_json_error($error, 400);
+
       }
   
       if (!empty($_POST['photo'])) {
         $photo = sanitize_text_field($_POST['photo']);
       } else {
-        return wp_send_json_error("please enter img url", 400);
+        $error = ['photo' => 'Please enter image url'];
+        return wp_send_json_error($error, 400);
       }
   
       if (!empty($_POST['email'])) {
         $email = sanitize_text_field($_POST['email']);
       } else {
-        return wp_send_json_error("please enter email", 400);
+        $error = ['email' => 'Please enter email address'];
+        return wp_send_json_error($error, 400);
       }
       if (!empty($_POST['mobile'])) {
         $mobile = sanitize_text_field($_POST['mobile']);
       } else {
-        return wp_send_json_error("please enter mobile", 400);
+        $error = ['mobile' => 'Please enter phone number'];
+        return wp_send_json_error($error, 400);
       }
       if (!empty($_POST['company'])) {
         $company = sanitize_text_field($_POST['company']);
       } else {
-        return wp_send_json_error("please enter company", 400);
+        $error = ['company' => 'Please enter company name'];
+        return wp_send_json_error($error, 400);
       }
       if (!empty($_POST['title'])) {
         $title = sanitize_text_field($_POST['title']);
       } else {
-        return wp_send_json_error("please enter title", 400);
+        $error = ['title' => 'Please enter title'];
+        return wp_send_json_error($error, 400);
       }
 
    

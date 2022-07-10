@@ -1,8 +1,7 @@
 <template>
 <div>
     <p class="h3 text-success fw-bold">Edit Contact</p>
-    <h2 class="show-error">{{ error }}</h2>
-    <InputForm v-bind:contact="contact" @form-submit="onSubmit" />
+    <InputForm v-bind:contact="contact" v-bind:errors="errors" @form-submit="onSubmit" />
 </div>
 </template>
 
@@ -27,7 +26,7 @@ export default {
             },
             contacts: [],
             mydata: '',
-            error: '',
+            errors: [],
         }
     },
 
@@ -78,7 +77,7 @@ export default {
                     });
                 },
                 error: function (error) {
-                    that.error = error.responseJSON.data;
+                    that.errors = error.responseJSON.data;
                 },
 
             });
