@@ -2,7 +2,7 @@
 
 namespace CM\Includes;
 
-class AdminAjaxHandler
+class AdminAjaxHandler extends Models
 {
 
     function __construct()
@@ -69,19 +69,19 @@ class AdminAjaxHandler
         
         if (isset($_POST['id'])) {
             $id = $_POST['id'];     
-            Models::update_contact_table($id,$name,$photo, $email, $mobile, $company, $title);
+            parent::update_contact_table($id,$name,$photo, $email, $mobile, $company, $title);
         }else{
-              Models::add_contact_table($name,$photo, $email, $mobile, $company, $title);
+            parent::add_contact_table($name,$photo, $email, $mobile, $company, $title);
         }
       }
 
     public function cm_get_contact_lists(){
-        Models::get_all_contacts();
+        parent::get_all_contacts();
     }
 
     public function cm_get_single_data(){
         $id  = $_GET['id'];
-        Models::fetch_single_data($id);    
+        parent::fetch_single_data($id);    
     }
 
     public function cm_delete_contact(){
@@ -89,6 +89,6 @@ class AdminAjaxHandler
             return wp_send_json_error('Busted! Please login!', 400);
         }
             $id  = $_POST['id'];
-            Models::delete_contact($id);
+            parent::delete_contact($id);
     }  
 }

@@ -7,7 +7,7 @@ class Models
     /**
      * Insert data into contact table
      */
-      public static function add_contact_table($name,$photo, $email, $mobile, $company, $title)
+      public function add_contact_table($name,$photo, $email, $mobile, $company, $title)
       {
           global $wpdb;
           $defaults = [
@@ -38,7 +38,7 @@ class Models
       /**
        * Update contact table
        */
-      public static function update_contact_table($id,$name,$photo, $email, $mobile, $company, $title){
+      public function update_contact_table($id,$name,$photo, $email, $mobile, $company, $title){
           global $wpdb;
           $table_name   = $wpdb->prefix .  'contacts';
           $where        = ['id' => $id];
@@ -67,7 +67,7 @@ class Models
       /**
        * Fetching data for contact table
        */
-      public static function get_all_contacts()
+      public function get_all_contacts()
       {
           global $wpdb;
 
@@ -84,7 +84,7 @@ class Models
       /**
        * Get Single Data
        */ 
-      public static function fetch_single_data($id)
+      public function fetch_single_data($id)
       {
           global $wpdb;
           $post_id = $id;
@@ -103,7 +103,7 @@ class Models
       /**
        * Deleting Table's row
        */
-      public static function delete_contact($id)
+      public function delete_contact($id)
       {
           global $wpdb;
           $table_name = $wpdb->prefix . 'contacts';
