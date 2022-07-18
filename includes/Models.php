@@ -12,12 +12,12 @@ class Models
           global $wpdb;
           $defaults = [
 
-            'name'    => $name,
-            'photo'   => $photo,
-            'email'   => $email,
-            'mobile'  => $mobile,
-            'company' => $company,
-            'title'   => $title,
+              'name'    => $name,
+              'photo'   => $photo,
+              'email'   => $email,
+              'mobile'  => $mobile,
+              'company' => $company,
+              'title'   => $title,
 
             ];
           $table_name = $wpdb->prefix . 'contacts';
