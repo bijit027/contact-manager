@@ -6,10 +6,9 @@ function cm_get_contacts_by_id($items)
 
     $id  = $items;
     $sql = $wpdb->get_results(
-      $wpdb->prepare(
-        "SELECT * FROM {$wpdb->prefix}contacts WHERE id=%s",
-        $id
-
+        $wpdb->prepare(
+            "SELECT * FROM {$wpdb->prefix}contacts WHERE id=%s",
+            $id
       )
     );
     return $sql;

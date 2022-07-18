@@ -9,29 +9,29 @@ class Models
      */
       public static function add_contact_table($name,$photo, $email, $mobile, $company, $title)
       {
-            global $wpdb;
-            $defaults = [
+          global $wpdb;
+          $defaults = [
 
-              'name'    => $name,
-              'photo'   => $photo,
-              'email'   => $email,
-              'mobile'  => $mobile,
-              'company' => $company,
-              'title'   => $title,
+            'name'    => $name,
+            'photo'   => $photo,
+            'email'   => $email,
+            'mobile'  => $mobile,
+            'company' => $company,
+            'title'   => $title,
 
             ];
-              $table_name = $wpdb->prefix . 'contacts';
+          $table_name = $wpdb->prefix . 'contacts';
 
-              $inserted = $wpdb->insert(
-                $table_name,
-                $defaults
-              );
+          $inserted = $wpdb->insert(
+              $table_name,
+              $defaults
+          );
 
-              if (!$inserted) {
-                return wp_send_json_error("Error while posting data", 500);
-              }
+          if (!$inserted) {
+              return wp_send_json_error("Error while posting data", 500);
+          }
               return wp_send_json_success([
-                'message' => __("Successfully posted data", "contact-manager")
+                  'message' => __("Successfully posted data", "contact-manager")
               ], 200);   
       }
 
@@ -44,22 +44,22 @@ class Models
           $where        = ['id' => $id];
 
           $updated      =  $wpdb->update(
-            $table_name,
-            array(
-              'name'        => $name,
-              'photo'       => $photo,
-              'email'       => $email,
-              'mobile'      => $mobile,
-              'company'     => $company,
-              'title'       => $title,
-            ),
-            $where
+              $table_name,
+              array(
+                  'name'        => $name,
+                  'photo'       => $photo,
+                  'email'       => $email,
+                  'mobile'      => $mobile,
+                  'company'     => $company,
+                  'title'       => $title,
+              ),
+              $where
           );
           if ( !$updated ) {
-            return wp_send_json_error( "Error while udpating data", 500 );
+              return wp_send_json_error( "Error while udpating data", 500 );
           }
           return wp_send_json_success( [
-            'message' => __( "Successfully update data", "textdomain" )
+              'message' => __( "Successfully update data", "textdomain" )
           ], 200 );
 
       }
@@ -72,13 +72,13 @@ class Models
           global $wpdb;
 
           $request = $wpdb->get_results(
-            "SELECT * FROM {$wpdb->prefix}contacts"
+              "SELECT * FROM {$wpdb->prefix}contacts"
           );
           if (is_wp_error($request)) {
-            return false;
+              return false;
           }
-          wp_send_json_success($request, 200);
-          die();
+              wp_send_json_success($request, 200);
+              die();
       }
 
       /**
@@ -90,14 +90,14 @@ class Models
           $post_id = $id;
 
           $single_data = $wpdb->get_results(
-            "SELECT * FROM {$wpdb->prefix}contacts WHERE id = {$post_id}"
+              "SELECT * FROM {$wpdb->prefix}contacts WHERE id = {$post_id}"
           );
 
           if (is_wp_error($single_data)) {
-            return false;
+              return false;
           }
-          wp_send_json_success($single_data, 200);
-          die();
+              wp_send_json_success($single_data, 200);
+              die();
       }
 
       /**

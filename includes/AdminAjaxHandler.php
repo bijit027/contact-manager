@@ -4,41 +4,36 @@ namespace CM\Includes;
 
 class AdminAjaxHandler
 {
-  public $prefix = 'cm';
 
-  function __construct()
-  {
-      foreach ($this->get_actions() as $action => $handler) {
-          add_action("wp_ajax_{$action}", $handler['function']);
-      }
-  }
+    function __construct()
+    {
+        foreach ($this->get_actions() as $action => $handler) {
+            add_action("wp_ajax_{$action}", $handler['function']);
+        }
+    }
 
-  function get_actions()
-  {
-      return [
-          'cm_insert_contact_table' => ['function' => [$this, 'cm_insert_contact_table']],
-          'cm_get_contact_lists' => ['function' => [$this, 'cm_get_contact_lists']],
-          'cm_get_single_data' => ['function' => [$this, 'cm_get_single_data']],
-          'cm_delete_contact' => ['function' => [$this, 'cm_delete_contact']],
-      ];
-  }
+    function get_actions()
+    {
+        return [
+            'cm_insert_contact_table' => ['function' => [$this, 'cm_insert_contact_table']],
+            'cm_get_contact_lists' => ['function' => [$this, 'cm_get_contact_lists']],
+            'cm_get_single_data' => ['function' => [$this, 'cm_get_single_data']],
+            'cm_delete_contact' => ['function' => [$this, 'cm_delete_contact']],
+        ];
+    }
 
-
-
-
-
-  public function cm_insert_contact_table()
-  {
-        
-      if (!wp_verify_nonce($_POST['wpsfb_nonce'], 'wpsfb_ajax_nonce')) {
-          return wp_send_json_error('Busted! Please login!', 400);
-      }
-       if (!empty($_POST['name'])) {
-           $name = sanitize_text_field($_POST['name']);
-       } else {
-           $error = ['name' => 'Please enter name'];
-           return wp_send_json_error($error, 400);
-       }
+    public function cm_insert_contact_table()
+    {
+          
+        if (!wp_verify_nonce($_POST['wpsfb_nonce'], 'wpsfb_ajax_nonce')) {
+            return wp_send_json_error('Busted! Please login!', 400);
+        }
+        if (!empty($_POST['name'])) {
+            $name = sanitize_text_field($_POST['name']);
+        } else {
+            $error = ['name' => 'Please enter name'];
+            return wp_send_json_error($error, 400);
+        }
         if (!empty($_POST['photo'])) {
             $photo = sanitize_text_field($_POST['photo']);
         } else {
@@ -70,19 +65,18 @@ class AdminAjaxHandler
             return wp_send_json_error($error, 400);
         }
 
-   
-      
-      if (isset($_POST['id'])) {
-        $id = $_POST['id'];     
-          Models::update_contact_table($id,$name,$photo, $email, $mobile, $company, $title);
-      }else{
-            Models::add_contact_table($name,$photo, $email, $mobile, $company, $title);
+    
+        
+        if (isset($_POST['id'])) {
+            $id = $_POST['id'];     
+            Models::update_contact_table($id,$name,$photo, $email, $mobile, $company, $title);
+        }else{
+              Models::add_contact_table($name,$photo, $email, $mobile, $company, $title);
+        }
       }
 
-    }
-
     public function cm_get_contact_lists(){
-            Models::get_all_contacts();
+        Models::get_all_contacts();
     }
 
     public function cm_get_single_data(){
@@ -91,13 +85,10 @@ class AdminAjaxHandler
     }
 
     public function cm_delete_contact(){
-
-    if (!wp_verify_nonce($_POST['wpsfb_nonce'], 'wpsfb_ajax_nonce')) {
-        return wp_send_json_error('Busted! Please login!', 400);
-      }
-        $id  = $_POST['id'];
+        if (!wp_verify_nonce($_POST['wpsfb_nonce'], 'wpsfb_ajax_nonce')) {
+            return wp_send_json_error('Busted! Please login!', 400);
+        }
+            $id  = $_POST['id'];
             Models::delete_contact($id);
-    }
-
-  
+    }  
 }
