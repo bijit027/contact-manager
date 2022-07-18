@@ -57,10 +57,10 @@ class Shortcode
             return '<div><h2 style="color:red; border: 1px solid black">Nothing To Show</h2></div>';
         }
         else{
-        ob_start();
-        include CM_CONTACTS_PATH . '/includes/Views/AttributeRender.php';
-        $content = ob_get_clean();
-        return $content;
+            ob_start();
+            include CM_CONTACTS_PATH . '/includes/Views/AttributeRender.php';
+            $content = ob_get_clean();
+            return $content;
         }
     }
 
