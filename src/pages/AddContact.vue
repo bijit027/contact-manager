@@ -20,8 +20,6 @@ export default {
                 company: '',
                 title: '',
                 button: 'Create',
-                
-
             },
             errors: []
         }

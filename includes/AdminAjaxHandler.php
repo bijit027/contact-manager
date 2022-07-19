@@ -73,7 +73,7 @@ class AdminAjaxHandler extends Models
         }else{
             parent::add_contact_table($name,$photo, $email, $mobile, $company, $title);
         }
-      }
+    }
 
     public function cm_get_contact_lists(){
         parent::get_all_contacts();
