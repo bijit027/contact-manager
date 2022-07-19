@@ -80,25 +80,42 @@ export default {
         }
     },
 
-    mounted() {
-        const that = this;
-        jQuery.ajax({
-            type: "POST",
-            url: ajax_url.ajaxurl,
-            dataType: 'json',
-            data: {
-                action: "cm_get_contact_lists",
+    created() {
+        
+        // watch the params of the route to fetch the data again
+        this.$watch(
+            () => this.$route.params,
+            () => {
+                this.fetchData()
             },
-            success: function (data) {
-                that.contacts = data.data;
-
+            // fetch the data when the view is created and the data is
+            // already being observed
+            {
+                immediate: true
             }
-        });
+        )
     },
 
     methods: {
-        clickDeleteContact: async function (contactID) {
 
+        fetchData() {
+            const that = this;
+            jQuery.ajax({
+                type: "GET",
+                url: ajax_url.ajaxurl,
+                dataType: 'json',
+                data: {
+                    action: "cm_get_contact_lists",
+                },
+                success: function (data) {
+                    that.contacts = data.data;
+
+                }
+            });
+
+        },
+
+        clickDeleteContact: async function (contactID) {
             jQuery.ajax({
                 type: "POST",
                 url: ajax_url.ajaxurl,
