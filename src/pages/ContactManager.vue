@@ -30,8 +30,9 @@
                     <div class="row align-item-center">
                         <div class="col-sm-5">
                             <img :src="contact.photo" alt="" class="contact-img" />
-                        </div>
+                        </div> 
                         <div class="col-sm-6">
+                            <b>[contact-code id="{{ contact.id }}"]</b>
                             <ul class="list-group">
                                 <li class="list-group-item">
                                     ID : <span class="fw-bold">{{ contact.id }}</span>
@@ -47,8 +48,8 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-sm-1   flex-column justify-content-center align-items-center">
-                            <router-link :to="`/contacts/view/${contact.id}`" class="btn btn-warning my-1 ">
+                        <div class="col-sm-1   flex-column justify-content-center align-items-center ">
+                            <router-link :to="`/contacts/view/${contact.id}`" class="btn btn-warning my-1">
                                 <i class="fa fa-eye"></i>
                             </router-link>
                             <router-link :to="`/contacts/edit/${contact.id}`" class="btn btn-primary my-1">
@@ -81,7 +82,7 @@ export default {
     },
 
     created() {
-        
+
         // watch the params of the route to fetch the data again
         this.$watch(
             () => this.$route.params,
@@ -133,4 +134,7 @@ export default {
 </script>
 
 <style>
+.col-sm-1{
+    margin-top: 25px;
+}
 </style>
