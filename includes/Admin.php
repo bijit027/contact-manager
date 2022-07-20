@@ -17,7 +17,7 @@ class Admin
             'manage_options',
             'contact-manager',
             [$this, 'admin_menu_page'],
-            'dashicons-text',
+            'dashicons-id-alt',
             10
         );
         add_action('load-' . $hook, [$this, 'init_hooks']);
