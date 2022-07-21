@@ -5,8 +5,6 @@ import AddContact from "../pages/AddContact.vue";
 import EditContact from "../pages/EditContact.vue";
 import ViewContact from "../pages/ViewContact.vue";
 import PageNotFound from "../pages/PageNotFound.vue";
-// import NewAddContact from "../pages/NewAddContact.vue";
-// import NewEditContact from "../pages/NewEditContact.vue";
 
 const routes = [
   {
@@ -20,11 +18,6 @@ const routes = [
     name: "ContactManager",
     component: ContactManager,
   },
-  // {
-  //   path: "/contacts/add",
-  //   name: "NewAddContact",
-  //   component: NewAddContact,
-  // },
   {
     path: "/contacts/add",
     name: "AddContact",
@@ -35,12 +28,6 @@ const routes = [
     name: "EditContact",
     component: EditContact,
   },
-
-  // {
-  //   path: "/contacts/edit/:contactId",
-  //   name: "NewEditContact",
-  //   component: NewEditContact,
-  // },
   {
     path: "/contacts/view/:contactId",
     name: "ViewContact",

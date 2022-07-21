@@ -30,12 +30,12 @@ You should have received a copy of the GNU General Public License
 along with Awesome goal tracker. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 */
 
-if ( !defined( 'ABSPATH' ) ) {
-    exit;
+if (!defined( 'ABSPATH')) {
+  exit;
 }
 
-if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
-    require_once __DIR__ . '/vendor/autoload.php';
+if (file_exists(__DIR__ . '/vendor/autoload.php')) {
+  require_once __DIR__ . '/vendor/autoload.php';
 }
 
 final class Contact_Manager
@@ -51,9 +51,9 @@ final class Contact_Manager
     public function __construct()
     {
         $this->plugin_constants();
-        register_activation_hook( __FILE__, [$this, 'activate'] );
-        register_deactivation_hook( __FILE__, [$this, 'deactivate'] );
-        add_action( 'plugins_loaded', [$this, 'init_plugin'] );
+        register_activation_hook(__FILE__, [$this, 'activate']);
+        register_deactivation_hook( __FILE__, [$this, 'deactivate']);
+        add_action('plugins_loaded', [$this, 'init_plugin']);
     }
 
     /**
@@ -66,7 +66,7 @@ final class Contact_Manager
         define('CM_PLUGIN_PATH', trailingslashit(plugin_dir_path(__FILE__)));
         define('CM_PLUGIN_URL', trailingslashit(plugins_url('', __FILE__)));
         define('CM_ASSETS', CM_PLUGIN_URL . '/assets');
-        define('CM_CONTACTS_BASE_DIR', plugin_dir_url( __FILE__ ));
+        define('CM_CONTACTS_BASE_DIR', plugin_dir_url(__FILE__));
         define('CM_CONTACTS_PATH', __DIR__);
     }
 
@@ -78,11 +78,11 @@ final class Contact_Manager
     {
         static $instance = false;
 
-        if ( !$instance ) {
-          $instance = new self();
+        if (!$instance) {
+            $instance = new self();
         }
 
-        return $instance;
+            return $instance;
     }
 
     /**
@@ -117,7 +117,7 @@ final class Contact_Manager
             new \CM\Includes\Admin();
         } else {
             new \CM\Includes\Frontend();
-      }
+        }
     }
 }
 
