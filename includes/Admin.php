@@ -4,7 +4,7 @@ namespace CM\Includes;
 
 class Admin
 {
-    function __construct()
+    public function __construct()
     {
         add_action('admin_menu', [$this, 'cm_admin_menu']);
     }

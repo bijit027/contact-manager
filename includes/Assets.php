@@ -4,7 +4,7 @@ namespace CM\Includes;
 
 class Assets
 {
-    function __construct()
+    public function __construct()
     {
         if (is_admin()) {
             add_action('admin_enqueue_scripts', [$this, 'register']);

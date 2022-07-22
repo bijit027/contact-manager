@@ -55,12 +55,12 @@ class Models
             ),
             $where
         );
-        if (!$updated) {
-            return wp_send_json_error("Error while udpating data", 500);
+        if ( !$updated ) {
+            return wp_send_json_error( "Error while udpating data", 500 );
         }
-        return wp_send_json_success([
-            'message' => __("Successfully update data", "textdomain")
-        ], 200);
+        return wp_send_json_success( [
+            'message' => __( "Successfully update data", "textdomain" )
+        ], 200 );
 
     }
 

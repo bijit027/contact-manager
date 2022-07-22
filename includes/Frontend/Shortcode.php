@@ -34,8 +34,6 @@ class Shortcode
     public function render_shortcode($atts = [], $content = '')
     {
 
-        $this->loadAssets();
-
         $atts = shortcode_atts(array(
             'id' => ''
         ), $atts );
@@ -57,6 +55,7 @@ class Shortcode
             return '<div><h2 style="color:red; border: 1px solid black">Nothing To Show</h2></div>';
         }
         else{
+            $this->loadAssets();
             ob_start();
             include CM_CONTACTS_PATH . '/includes/Views/AttributeRender.php';
             $content = ob_get_clean();
