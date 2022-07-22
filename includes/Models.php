@@ -7,9 +7,11 @@ class Models
     /**
      * Insert data into contact table
      */
-    public function add_contact_table($name,$photo, $email, $mobile, $company, $title)
+    public function add_contact_table($data)
     {
         global $wpdb;
+
+        extract($data);
         $defaults = [
 
             'name'    => $name,
@@ -38,8 +40,9 @@ class Models
     /**
     * Update contact table
     */
-    public function update_contact_table($id,$name,$photo, $email, $mobile, $company, $title){
+    public function update_contact_table($id,$data){
         global $wpdb;
+        extract($data);
         $table_name   = $wpdb->prefix .  'contacts';
         $where        = ['id' => $id];
 

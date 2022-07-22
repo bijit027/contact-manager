@@ -24,55 +24,41 @@ class AdminAjaxHandler extends Models
 
     public function cm_insert_contact_table()
     {
-          
         if (!wp_verify_nonce($_POST['wpsfb_nonce'], 'wpsfb_ajax_nonce')) {
             return wp_send_json_error('Busted! Please login!', 400);
         }
-        if (!empty($_POST['name'])) {
-            $name = sanitize_text_field($_POST['name']);
-        } else {
-            $error = ['name' => 'Please enter name'];
-            return wp_send_json_error($error, 400);
-        }
-        if (!empty($_POST['photo'])) {
-            $photo = sanitize_text_field($_POST['photo']);
-        } else {
-            $error = ['photo' => 'Please enter image url'];
-            return wp_send_json_error($error, 400);
-        }  
-        if (!empty($_POST['email'])) {
-            $email = sanitize_text_field($_POST['email']);
-        } else {
-            $error = ['email' => 'Please enter email address'];
-            return wp_send_json_error($error, 400);
-        }
-        if (!empty($_POST['mobile'])) {
-            $mobile = sanitize_text_field($_POST['mobile']);
-        } else {
-            $error = ['mobile' => 'Please enter phone number'];
-            return wp_send_json_error($error, 400);
-        }
-        if (!empty($_POST['company'])) {
-            $company = sanitize_text_field($_POST['company']);
-        } else {
-            $error = ['company' => 'Please enter company name'];
-            return wp_send_json_error($error, 400);
-        }
-        if (!empty($_POST['title'])) {
-            $title = sanitize_text_field($_POST['title']);
-        } else {
-            $error = ['title' => 'Please enter title'];
-            return wp_send_json_error($error, 400);
-        }
 
-    
+        $field_keys = [
+            'name',
+            'photo',
+            'email',
+            'mobile',
+            'company',
+            'title',
+
+        ];
+        
+        $data = [];
+        $errors = [];
+        foreach($field_keys as $field_key){
+            if (!empty($_POST[$field_key])) {
+                $data[$field_key] = sanitize_text_field($_POST[$field_key]);
+                   
+            }else {
+                $errors[$field_key] = 'Please enter '.$field_key;     
+            }           
+        }
+        if (!empty($errors)){
+            return wp_send_json_error($errors, 400);      
+        }
         
         if (isset($_POST['id'])) {
             $id = $_POST['id'];     
-            parent::update_contact_table($id,$name,$photo, $email, $mobile, $company, $title);
+            parent::update_contact_table($id,$data);
         }else{
-            parent::add_contact_table($name,$photo, $email, $mobile, $company, $title);
+            parent::add_contact_table($data);
         }
+
     }
 
     public function cm_get_contact_lists(){
