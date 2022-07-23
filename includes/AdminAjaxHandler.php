@@ -15,12 +15,12 @@ class AdminAjaxHandler extends Models
     function get_actions()
     {
         return [
-            'cm_insert_contact_table' => ['function' => [$this, 'cm_insert_contact_table']],
-            'cm_get_contact_lists' => ['function' => [$this, 'cm_get_contact_lists']],
-            'cm_get_single_data' => ['function' => [$this, 'cm_get_single_data']],
-            'cm_delete_contact' => ['function' => [$this, 'cm_delete_contact']],  
+            'cm_insert_contact_table'   => ['function' => [$this, 'cm_insert_contact_table']],
+            'cm_get_contact_lists'      => ['function' => [$this, 'cm_get_contact_lists']],
+            'cm_get_single_data'        => ['function' => [$this, 'cm_get_single_data']],
+            'cm_delete_contact'         => ['function' => [$this, 'cm_delete_contact']],  
             'cm_insert_shortcode_table' => ['function' => [$this, 'cm_insert_shortcode_table']],
-            'cm_get_shortcode_value' => ['function' => [$this, 'cm_get_shortcode_value']],        
+            'cm_get_shortcode_value'    => ['function' => [$this, 'cm_get_shortcode_value']],        
         ];
     }
 

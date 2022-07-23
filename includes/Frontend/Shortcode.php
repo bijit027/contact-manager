@@ -43,14 +43,10 @@ class Shortcode
 
             $settings = cm_custom_shortcode();
             $items = cm_get_contacts_by_id($id);
-            return $this->renderAttributes($items,$settings);
+            return $this->renderAttributesBasis($items,$settings);
         } else {
             $settings = cm_custom_shortcode();
-            foreach($settings as $setting){
-                $limit = $setting->limit;
-                $orderby = $setting->orderby;
-                }
-            $items = cm_get_all_contacts($limit,$orderby);
+            $items = cm_get_all_contacts();
             return $this->renderAttributes($items,$settings);
         }
     }
@@ -63,11 +59,43 @@ class Shortcode
         }
         else{
             $this->loadAssets();
+
+            foreach($settings as $setting){
+                $limit = $setting->limit;
+                $orderby = $setting->orderby;
+                }
+            if (!isset ($_GET['pageno']) ) {  
+                $page = 1;  
+            } else {  
+                $page = $_GET['pageno'];  
+            }
+            
+            $results_per_page = $limit;  
+            $page_first_result = ($page-1) * $results_per_page;  
+            $number_of_result = count($items); 
+            
+            //determine the total number of pages available  
+            $number_of_page = ceil ($number_of_result / $results_per_page);
+          
+
+            $contact_items = cm_get_pegination_data($page_first_result,$results_per_page,$orderby);
+
             ob_start();
             include CM_CONTACTS_PATH . '/includes/Views/AttributeRender.php';
             $content = ob_get_clean();
             return $content;
         }
+    }
+
+    public function renderAttributesBasis( $items,$settings )
+    {
+        $this->loadAssets();
+        $contact_items = $items;
+
+        ob_start();
+        include_once CM_CONTACTS_PATH . '/includes/Views/AttributeRender.php';
+        $content = ob_get_clean();
+        return $content;
     }
 
 }

@@ -10,11 +10,11 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    redirect: "/contact",
+    redirect: "/contacts",
     component: Home,
   },
   {
-    path: "/contact/",
+    path: "/contacts/",
     name: "ContactManager",
     component: ContactManager,
   },

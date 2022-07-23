@@ -14,12 +14,11 @@ function cm_get_contacts_by_id($items)
     return $sql;
 }
 
-function cm_get_all_contacts($limit,$orderby)
+function cm_get_all_contacts()
 {
     global $wpdb;
-    $number = $limit;
     $column = $orderby;
-    $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts ORDER BY $column LIMIT $number");
+    $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts");
     return $sql;
 }
 
@@ -28,5 +27,17 @@ function cm_custom_shortcode(){
 
     global $wpdb;
     $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}settings");
+    return $sql;
+}
+
+
+function cm_get_pegination_data($page_first_result,$results_per_page,$orderby){
+
+    $offset = $page_first_result;
+    $page = $results_per_page;
+    $column = $orderby;
+
+    global $wpdb;
+    $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts ORDER BY $column  LIMIT $offset,$page");
     return $sql;
 }
