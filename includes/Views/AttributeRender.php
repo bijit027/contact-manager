@@ -1,8 +1,15 @@
 <div class='attribute' >
+<?php      
+    foreach($settings as $setting){
+    $color = $setting->color;
+    }
+        
+?>
 
     <table id='contacts'>
-     <caption>Contact List</caption>
+     <caption style="background-color:<?php esc_html_e($color)?>;color: white; padding-top: 12px; padding-bottom: 12px;">Contact List</caption>
         <tr>
+
           <th><?php esc_html_e('ID','contact-manger') ?></th>
           <th><?php esc_html_e('Name','contact-manger') ?></th>
           <th><?php esc_html_e('Email','contact-manger') ?></th>

@@ -20,6 +20,10 @@ class Assets
             'ajaxurl' => admin_url('admin-ajax.php'),
             'wpsfb_nonce' => wp_create_nonce('wpsfb_ajax_nonce')
         ));
+        wp_localize_script('cm-custom-script', 'ajax_url', array(
+            'ajaxurl' => admin_url('admin-ajax.php'),
+            'wpsfb_nonce' => wp_create_nonce('wpsfb_ajax_nonce')
+        ));
         $this->register_styles($this->get_styles());
     }
 
@@ -48,6 +52,12 @@ class Assets
                 'src'       => CM_ASSETS . '/admin/admin.js',
                 'deps'      => array( 'jquery' ),
                 'version'   => filemtime(CM_PLUGIN_PATH . 'assets/admin/admin.js'),
+                'in_footer' => true
+            ],
+            'cm-custom-script' => [
+                'src'       => CM_ASSETS . '/admin/custom.js',
+                'deps'      => array( 'jquery' ),
+                'version'   => filemtime(CM_PLUGIN_PATH . 'assets/admin/custom.js'),
                 'in_footer' => true
             ],
         ];

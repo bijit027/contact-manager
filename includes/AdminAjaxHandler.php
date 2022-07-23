@@ -18,7 +18,9 @@ class AdminAjaxHandler extends Models
             'cm_insert_contact_table' => ['function' => [$this, 'cm_insert_contact_table']],
             'cm_get_contact_lists' => ['function' => [$this, 'cm_get_contact_lists']],
             'cm_get_single_data' => ['function' => [$this, 'cm_get_single_data']],
-            'cm_delete_contact' => ['function' => [$this, 'cm_delete_contact']],
+            'cm_delete_contact' => ['function' => [$this, 'cm_delete_contact']],  
+            'cm_insert_shortcode_table' => ['function' => [$this, 'cm_insert_shortcode_table']],
+            'cm_get_shortcode_value' => ['function' => [$this, 'cm_get_shortcode_value']],        
         ];
     }
 
@@ -51,7 +53,7 @@ class AdminAjaxHandler extends Models
         if (!empty($errors)){
             return wp_send_json_error($errors, 400);      
         }
-        
+
         if (isset($_POST['id'])) {
             $id = $_POST['id'];     
             parent::update_contact_table($id,$data);
@@ -76,5 +78,23 @@ class AdminAjaxHandler extends Models
         }
             $id  = $_POST['id'];
             parent::delete_contact($id);
+    }
+    public function cm_insert_shortcode_table(){
+
+
+        $data =  array(
+            'id'        => $_POST['id'],
+            'color'    => $_POST['color'],
+            'limit'     => $_POST['limit'],
+            'page'      => $_POST['page'],
+            'column'    => $_POST['column'],
+            'orderby'   => $_POST['orderby'],
+        );
+        // parent::custom_shortcode($id,$color,$limit,$page,$column,$orderby);
+        parent::custom_shortcode($data);
+
     }  
+    public function cm_get_shortcode_value(){
+        parent::get_shortcode_value();
+    }
 }

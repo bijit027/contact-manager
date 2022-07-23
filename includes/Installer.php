@@ -9,6 +9,7 @@ class Installer
     {
         $this->add_version();
         $this->create_contacts_table();
+        $this->create_settings_table();
     }
 
     public function add_version()
@@ -42,4 +43,28 @@ class Installer
         }
             dbDelta($sql);
     }
+
+    public function create_settings_table(){
+
+        global $wpdb;
+        $charset_collate = $wpdb->get_charset_collate();
+        $table_name = $wpdb->prefix . 'settings';
+        $sql = "CREATE TABLE IF NOT EXISTS `$table_name` (
+            `id` int(10) NOT NULL AUTO_INCREMENT,
+            `color` varchar(200) DEFAULT NULL,
+            `limit` varchar(200) DEFAULT NULL,
+            `page` varchar(200) DEFAULT NULL,
+            `column` varchar(200) DEFAULT NULL,
+            `orderby` varchar(200) DEFAULT NULL,
+            
+            PRIMARY KEY(`id`)
+            ) $charset_collate;";
+
+        if (!function_exists('dbDelta')) {
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+        }
+            dbDelta($sql);
+
+    }
+    
 }

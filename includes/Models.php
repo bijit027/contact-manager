@@ -113,4 +113,42 @@ class Models
         $wpdb->delete($table_name, array('id' => $id));
         die();
     }
+
+    public function custom_shortcode($data){
+        global $wpdb;
+        
+        extract($data);
+        $table_name   = $wpdb->prefix .  'settings';
+        $where        = ['id' => $id];
+        $updated      =  $wpdb->update(
+            $table_name,
+            array(
+                'color'        => $color,
+                'limit'        => $limit,
+                'page'         => $page,
+                'column'       => $column,
+                'orderby'      => $orderby,
+            ),
+            $where
+        );
+        if ( !$updated ) {
+            return wp_send_json_error( "Error while changing  shortcode", 500 );
+        }
+        return wp_send_json_success( [
+            'message' => __( "Successfully change shortcode", "contact-maneger" )
+        ], 200 );
+    }
+
+    public function get_shortcode_value(){
+        global $wpdb;
+
+        $request = $wpdb->get_results(
+            "SELECT * FROM {$wpdb->prefix}settings"
+        );
+        if (is_wp_error($request)) {
+            return false;
+        }
+            wp_send_json_success($request, 200);
+            die();
+    }
 }

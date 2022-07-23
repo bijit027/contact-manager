@@ -40,19 +40,26 @@ class Shortcode
         $id = $atts['id'];
 
         if (!empty( $atts['id'])) {
+
+            $settings = cm_custom_shortcode();
             $items = cm_get_contacts_by_id($id);
-            return $this->renderAttributes($items);
+            return $this->renderAttributes($items,$settings);
         } else {
-            $items = cm_get_all_contacts();
-            return $this->renderAttributes($items);
+            $settings = cm_custom_shortcode();
+            foreach($settings as $setting){
+                $limit = $setting->limit;
+                $orderby = $setting->orderby;
+                }
+            $items = cm_get_all_contacts($limit,$orderby);
+            return $this->renderAttributes($items,$settings);
         }
     }
 
-    public function renderAttributes($items)
+    public function renderAttributes($items,$settings)
     {
-
+        $color  = 'red';
         if(empty($items)){
-            return '<div><h2 style="color:red; border: 1px solid black">Nothing To Show</h2></div>';
+            return '<div><h2 style="color:'.$color.'border: 1px solid black">Nothing To Show</h2></div>';
         }
         else{
             $this->loadAssets();
