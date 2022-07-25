@@ -18,9 +18,10 @@
     <div class="container mt-3">
         <div class="row">
             <div class="col-md-4">
+
                 <form @submit.prevent="submitChange()">
                     <div class="mb-2">
-                        <label for="favcolor">Select your favorite color:</label>
+                        <label for="favcolor">Select table header color:</label>
                         <input type="color" v-model="contact.color" class="form-control"><br><br>
                     </div>
                     <div class="mb-2">
@@ -40,14 +41,28 @@
                     </div>
 
                     <div class="mb-2">
+                        <label for="favcolor">Hide Column:</label><br>
+                        <select id="cars" v-model="contact.column" name="cars">
+                            <option value="">None</option>
+                            <option value="id">ID</option>
+                            <option value="name">Name</option>
+                            <option value="email">Email</option>
+                            <option value="mobile">Mobile</option>
+                            <option value="company">Company</option>
+                            <option value="title">Title</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-2">
                         <input type="submit" class="btn btn-success" value="Change">
                     </div>
 
                 </form>
+
             </div>
-            <div class="col-md-4">
-                <img src="contact.photo" alt="" class="contact-img">
-            </div>
+                <div class="col">
+                    <button class="btn btn-secondary" v-on:click="defaults('')">Default</button>
+                </div>
         </div>
     </div>
 </div>
@@ -66,6 +81,16 @@ export default {
                 page: '',
                 column: '',
                 orderby: ''
+            },
+
+            default: {
+                id: '1',
+                color: '#4CAF50',
+                limit: '5',
+                page: '3',
+                column: '',
+                orderby: 'id'
+
             },
             contacts: [],
             error: '',
@@ -131,7 +156,13 @@ export default {
                     that.error = error.responseJSON.data;
                 },
             });
-        }
+        },
+
+        defaults() {
+
+            this.contact = this.default;
+
+        },
     }
 }
 </script>

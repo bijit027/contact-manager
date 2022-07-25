@@ -43,7 +43,7 @@ class Shortcode
 
             $settings = cm_custom_shortcode();
             $items = cm_get_contacts_by_id($id);
-            return $this->renderAttributesBasis($items,$settings);
+            return $this->renderAttributesWithId($items,$settings);
         } else {
             $settings = cm_custom_shortcode();
             $items = cm_get_all_contacts();
@@ -64,10 +64,12 @@ class Shortcode
                 $limit = $setting->limit;
                 $orderby = $setting->orderby;
                 }
-            if (!isset ($_GET['pageno']) ) {  
-                $page = 1;  
+            if (!isset ($_GET['pageno'])) {  
+                $page = 1; 
+                $current_page = 1; 
             } else {  
                 $page = $_GET['pageno'];  
+                $current_page = $_GET['pageno'];
             }
             
             $results_per_page = $limit;  
@@ -77,7 +79,7 @@ class Shortcode
             //determine the total number of pages available  
             $number_of_page = ceil ($number_of_result / $results_per_page);
           
-
+          
             $contact_items = cm_get_pegination_data($page_first_result,$results_per_page,$orderby);
 
             ob_start();
@@ -87,11 +89,11 @@ class Shortcode
         }
     }
 
-    public function renderAttributesBasis( $items,$settings )
+    public function renderAttributesWithId( $items,$settings)
     {
         $this->loadAssets();
+  
         $contact_items = $items;
-
         ob_start();
         include_once CM_CONTACTS_PATH . '/includes/Views/AttributeRender.php';
         $content = ob_get_clean();

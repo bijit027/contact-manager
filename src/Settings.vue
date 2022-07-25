@@ -1,9 +1,6 @@
 <template>
 <div>
     <NavBar />
-
-
-    <h2>Settings</h2>
     <router-view v-slot="{ Component }">
         <component :is="Component" />
     </router-view>

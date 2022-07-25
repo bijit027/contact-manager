@@ -6,60 +6,92 @@
         
 ?>
 
-    <table id='contacts'>
-     <caption style="background-color:<?php esc_html_e($color)?>;color: white; padding-top: 12px; padding-bottom: 12px;">Contact List</caption>
-        <tr>
+<table id='contacts'>
+    <caption style="background-color:<?php esc_html_e($color)?>;color: white; padding-top: 12px; padding-bottom: 12px;">Contact List</caption>
+    <tr>
+        <?php
+            $table_header =  array(
+                'id'        => 'ID',
+                'name'      => 'Name',
+                'email'     => 'Email',
+                'mobile'    => 'Mobile',
+                'company'   => 'Company',
+                'title'     => 'Title',
+            );
+            $unset = $setting->column;
 
-          <th style="background-color:<?php esc_html_e($color)?>"><?php esc_html_e('ID','contact-manger') ?></th>
-          <th style="background-color:<?php esc_html_e($color)?>"><?php esc_html_e('Name','contact-manger') ?></th>
-          <th style="background-color:<?php esc_html_e($color)?>"><?php esc_html_e('Email','contact-manger') ?></th>
-          <th style="background-color:<?php esc_html_e($color)?>"><?php esc_html_e('Mobile','contact-manger') ?></th>
-          <th style="background-color:<?php esc_html_e($color)?>"><?php esc_html_e('Company','contact-manger') ?></th>
-          <th style="background-color:<?php esc_html_e($color)?>"><?php esc_html_e('Title','contact-manger') ?></th>         
-        </tr>
+            unset($table_header[$unset]);
         
-        <?php foreach ($contact_items as $item): ?>
-          <tr>  
-            <td>
-              <?php  esc_html_e($item->id) .'</br>'; ?>
-            </td>
-            <td>
-              <?php  esc_html_e($item->name) .'</br>'; ?>
-            </td>
-            <td>
-              <?php  esc_html_e($item->email) .'</br>'; ?>
-            </td>
-            <td>
-              <?php  esc_html_e($item->mobile,) .'</br>'; ?>
-            </td>
-            <td>
-              <?php  esc_html_e($item->company) .'</br>'; ?>
-            </td>
-            <td>
-              <?php  esc_html_e($item->title)  .'</br>'; ?>
-            </td>
-          </tr>
-                   
+
+            foreach($contact_items as $items){
+                unset($items->$unset);
+            }
+          
+            foreach ($table_header as $item):?>
+                <th style="background-color:<?php esc_html_e($color)?>"><?php esc_html_e($item) ?></th>
+            <?php endforeach; ?>  
+        
+    </tr>
+        
+    <?php 
+        foreach ($contact_items as $item): ?>
+            <tr> 
+                <?php if(!empty($item->id)){?> 
+                    <td>
+                        <?php  esc_html_e($item->id) .'</br>'; ?>
+                    </td>
+                <?php } ?>
+                <?php if(!empty($item->name)){?>
+                    <td>
+                        <?php  esc_html_e($item->name) .'</br>'; ?>
+                    </td>
+                <?php } ?>
+                <?php if(!empty($item->email)){?>
+                    <td>
+                        <?php  esc_html_e($item->email) .'</br>'; ?>
+                    </td>
+                  <?php } ?>
+                <?php if(!empty($item->mobile)){?>
+                    <td>
+                        <?php  esc_html_e($item->mobile) .'</br>'; ?>
+                    </td>
+                <?php } ?>
+                <?php if(!empty($item->company)){?>
+                    <td>
+                        <?php   esc_html_e($item->company) .'</br>'; ?>
+                    </td>
+                <?php } ?>
+                <?php if(!empty($item->title)){?>
+                    <td>
+                        <?php  esc_html_e($item->title)  .'</br>'; ?>
+                    </td>
+                <?php } ?>
+            </tr>
+                
         <?php endforeach; ?>
 
         <?php
-            $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
-            $position = strpos($url , '?page');
-            // remove string from the specific postion
-            $finalurl = substr($current_url,0,$position);
-
-            if($page>1){
-            _e('<div class="pagination"><a href = '. $finalurl.'"?pageno=' . $page-1 . '"><</a></div>');
-            }
-            if($page != $number_of_page){
-              _e('<div class="pagination"><a href = '. $finalurl.'"?pageno=' . $page+1 . '">></a></div>');
-              
-            }
-            for($page = 1; $page<= $number_of_page; $page++) { 
-              
-            _e('<div class="pagination"><a href = '. $finalurl.'"?pageno=' . $page . '">' . $page . ' </a></div>');    
+            if(count($contact_items)>'1'){
+                $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                  
+                $position = strpos($url , '?');
+                  // remove string from the specific postion
+                $finalurl = substr($url,0,$position);
+                if($page>1){
+                    _e('<div class="pagination"><a href = '. $finalurl.'"?pageno=' . $page-1 . '><</a></div>');
+                }
+                if($page < $number_of_page){
+                    _e('<div class="pagination"><a href = '. $finalurl.'"?pageno=' . $page+1 . '>></a></div>');  
+                }
+                for($page = 1; $page<= $number_of_page; $page++) { 
+                    if($page == $current_page){
+                        _e('<div class="pagination"><a class="active" href = '. $finalurl.'"?pageno=' . $page . '>' . $page . ' </a></div>'); 
+                    }
+                    else{
+                        _e('<div class="pagination"><a class="" href = '. $finalurl.'"?pageno=' . $page . '>' . $page . ' </a></div>'); 
+                    }   
+                }
           }
-
         ?>
 
                

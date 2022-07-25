@@ -17,7 +17,7 @@ function cm_get_contacts_by_id($items)
 function cm_get_all_contacts()
 {
     global $wpdb;
-    $column = $orderby;
+   
     $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts");
     return $sql;
 }
