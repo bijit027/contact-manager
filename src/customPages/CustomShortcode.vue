@@ -60,7 +60,6 @@
                     <div class="mb-2">
                         <input type="submit" class="btn btn-success" value="Change">
                     </div>
-
                 </form>
 
             </div>
@@ -73,7 +72,6 @@
 </template>
 
 <script>
-import $ from 'jquery';
 export default {
     name: 'AddContact',
     data: function () {
@@ -139,7 +137,7 @@ export default {
         submitChange() {
             const that = this;
             console.log(ajax_url.ajaxurl);
-            $.ajax({
+           jQuery.ajax({
                 type: "POST",
                 url: ajax_url.ajaxurl,
                 dataType: 'json',

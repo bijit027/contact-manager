@@ -54,7 +54,7 @@ class Shortcode
     public function renderAttributes($items,$settings)
     {
         if(empty($items)){
-            return '<div><h2 style="color:red border: 1px solid black">Nothing To Show</h2></div>';
+            return '<div><h2 style="color:red; border: 1px solid black">Nothing To Show</h2></div>';
         }
         else{
             $this->loadAssets();
@@ -90,6 +90,9 @@ class Shortcode
 
     public function renderAttributesWithId( $items,$settings)
     {
+        if(empty($items)){
+            return '<div><h2 style="color:red; border: 1px solid black">Nothing To Show</h2></div>';
+        }else{
         $this->loadAssets();
         $shortcode_id = 'exist';
         $contact_items = $items;
@@ -97,6 +100,7 @@ class Shortcode
         include_once CM_CONTACTS_PATH . '/includes/Views/AttributeRender.php';
         $content = ob_get_clean();
         return $content;
+        }
     }
 
 }

@@ -10,6 +10,8 @@ class Installer
         $this->add_version();
         $this->create_contacts_table();
         $this->create_settings_table();
+        $this->settings_value();
+      
     }
 
     public function add_version()
@@ -60,11 +62,41 @@ class Installer
             PRIMARY KEY(`id`)
             ) $charset_collate;";
 
+        
+
         if (!function_exists('dbDelta')) {
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
         }
+
             dbDelta($sql);
+            
 
     }
+    public function settings_value(){
+        global $wpdb;
+        $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}settings");
+        if(empty( $sql)){
+        $defaults = [
+
+            'id'        => '1',
+            'color'     => '#4CAF50',
+            'limit'     => '5',
+            'page'      => '3',
+            'column'    => '1',
+            'orderby'   => 'id'
+
+        ];
+        $table_name = $wpdb->prefix . 'settings';
+
+        $inserted = $wpdb->insert(
+            $table_name,
+            $defaults
+        );
+    }
+
+
+    }
+
+    
     
 }

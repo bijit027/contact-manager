@@ -19,17 +19,16 @@
                 'title'     => 'Title',
             );
 
-            $Column = unserialize(base64_decode($setting->column));
-            $unset = 'name';
-            if(empty($Column)){
-                $Column = array('1');
+            $column = unserialize(base64_decode($setting->column));
+            if(empty($column)){
+                $column = array('1');
             }
 
-            $alterHeader = array_diff($tableHeader, $Column);
-            $upperCaseColumn = array_map('strtolower', $Column);
+            $alterHeader = array_diff($tableHeader, $column);
+            $lowerCaseColumn = array_map('strtolower', $column);
 
             foreach($contact_items as $items){
-                foreach($upperCaseColumn as $col){
+                foreach($lowerCaseColumn as $col){
                     unset($items->$col);
                 }
             }
@@ -85,8 +84,12 @@
                 $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                   
                 $position = strpos($url , '?');
+                if($position === false){
+                    $finalurl = $url;
+                }else{
                 // remove string from the specific postion
                 $finalurl = substr($url,0,$position);
+                }
                 if($page>1){
                     _e('<div class="pagination"><a href = '. $finalurl.'"?pageno=' . $page-1 . '><</a></div>');
                 }
