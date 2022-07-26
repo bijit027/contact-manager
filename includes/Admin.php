@@ -20,6 +20,7 @@ class Admin
             'dashicons-id-alt',
             10
         );
+        //contact-manager-settings
         add_submenu_page( 'contact-manager', __( 'Contact', 'contact-manager' ), __( 'Contact', 'contact-manager' ),'manage_options','contact-manager', [ $this, 'admin_menu_page' ] );
        $custom =  add_submenu_page( 'contact-manager', __( 'Settings', 'contact-manager' ), __( 'Settings', 'contact-manager' ),'manage_options','contact-manager-settings', [ $this, 'admin_settings_page' ] );
         add_action('load-' . $hook, [$this, 'init_hooks']);

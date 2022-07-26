@@ -12,7 +12,6 @@
             </div>
         </div>
     </div>
-
     <div class="container mt-3">
         <div class="row">
             <div class="col-md-4">
@@ -74,7 +73,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .danger{
     color: red;
 }

@@ -81,15 +81,41 @@ class AdminAjaxHandler extends Models
     }
     public function cm_insert_shortcode_table(){
 
+        // $field_keys = [
+        //     'id',
+        //     'color',
+        //     'limit',
+        //     'page',
+        //     'column',
+        //     'orderby',
+
+        // ];
+        // $data = [];
+        // $errors = [];
+        // foreach($field_keys as $field_key){
+        //     if (!empty($_POST[$field_key])) {
+        //         $data[$field_key] = sanitize_text_field($_POST[$field_key]);
+                   
+        //     }else {
+        //         $errors[$field_key] = 'Please enter '.$field_key;     
+        //     }           
+        // }
+        // if (!empty($errors)){
+        //     return wp_send_json_error($errors, 400);      
+        // }
+
+        // var_dump($data->column);
 
         $data =  array(
             'id'        => $_POST['id'],
-            'color'    => $_POST['color'],
+            'color'     => $_POST['color'],
             'limit'     => $_POST['limit'],
             'page'      => $_POST['page'],
             'column'    => $_POST['column'],
             'orderby'   => $_POST['orderby'],
         );
+        extract($data);
+        // var_dump($column);
         // parent::custom_shortcode($id,$color,$limit,$page,$column,$orderby);
         parent::custom_shortcode($data);
 

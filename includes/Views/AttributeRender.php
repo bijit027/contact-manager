@@ -10,7 +10,7 @@
     <caption style="background-color:<?php esc_html_e($color)?>;color: white; padding-top: 12px; padding-bottom: 12px;">Contact List</caption>
     <tr>
         <?php
-            $table_header =  array(
+            $tableHeader =  array(
                 'id'        => 'ID',
                 'name'      => 'Name',
                 'email'     => 'Email',
@@ -18,16 +18,23 @@
                 'company'   => 'Company',
                 'title'     => 'Title',
             );
-            $unset = $setting->column;
 
-            unset($table_header[$unset]);
-        
+            $Column = unserialize(base64_decode($setting->column));
+            $unset = 'name';
+            if(empty($Column)){
+                $Column = array('1');
+            }
+
+            $alterHeader = array_diff($tableHeader, $Column);
+            $upperCaseColumn = array_map('strtolower', $Column);
 
             foreach($contact_items as $items){
-                unset($items->$unset);
+                foreach($upperCaseColumn as $col){
+                    unset($items->$col);
+                }
             }
           
-            foreach ($table_header as $item):?>
+            foreach ($alterHeader as $item):?>
                 <th style="background-color:<?php esc_html_e($color)?>"><?php esc_html_e($item) ?></th>
             <?php endforeach; ?>  
         
@@ -50,7 +57,7 @@
                     <td>
                         <?php  esc_html_e($item->email) .'</br>'; ?>
                     </td>
-                  <?php } ?>
+                <?php } ?>
                 <?php if(!empty($item->mobile)){?>
                     <td>
                         <?php  esc_html_e($item->mobile) .'</br>'; ?>
@@ -69,13 +76,16 @@
             </tr>
                 
         <?php endforeach; ?>
-
+        
         <?php
-            if(count($contact_items)>'1'){
+            /**
+             * For pagination
+            */
+            if($shortcode_id != 'exist'){
                 $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                   
                 $position = strpos($url , '?');
-                  // remove string from the specific postion
+                // remove string from the specific postion
                 $finalurl = substr($url,0,$position);
                 if($page>1){
                     _e('<div class="pagination"><a href = '. $finalurl.'"?pageno=' . $page-1 . '><</a></div>');
@@ -92,9 +102,6 @@
                     }   
                 }
           }
-        ?>
-
-               
-        
+        ?>        
 </table>
 </div>

@@ -118,6 +118,7 @@ class Models
         global $wpdb;
         
         extract($data);
+        $newColumn = base64_encode(serialize($column));
         $table_name   = $wpdb->prefix .  'settings';
         $where        = ['id' => $id];
         $updated      =  $wpdb->update(
@@ -126,13 +127,13 @@ class Models
                 'color'        => $color,
                 'limit'        => $limit,
                 'page'         => $page,
-                'column'       => $column,
+                'column'       => $newColumn,
                 'orderby'      => $orderby,
             ),
             $where
         );
         if ( !$updated ) {
-            return wp_send_json_error( "Error while changing  shortcode", 500 );
+            return wp_send_json_error( "Nothing to change", 500 );
         }
         return wp_send_json_success( [
             'message' => __( "Successfully change shortcode", "contact-maneger" )

@@ -1,7 +1,6 @@
 <template>
 <router-view />
 <div>
-    <h2 class="show-error">{{ error }}</h2>
     <div class="container mt-3">
         <div class="row">
             <div class="col">
@@ -15,22 +14,28 @@
             </div>
         </div>
     </div>
+
+    <div>
+        <h2 class="error">{{ error }}</h2>  
+    </div>
+   
     <div class="container mt-3">
         <div class="row">
-            <div class="col-md-4">
-
+            <div class="input-group input-group-lg">
                 <form @submit.prevent="submitChange()">
                     <div class="mb-2">
-                        <label for="favcolor">Select table header color:</label>
-                        <input type="color" v-model="contact.color" class="form-control"><br><br>
+                        <label for="color">Select table header color:</label>
+                        <input id="color" type="color" v-model="contact.color" class="form-control">
+                        <small class="danger" v-if="error.color">{{ error.color }}</small>
                     </div>
                     <div class="mb-2">
-                        <label for="favcolor">How many row you want to show:</label>
-                        <input v-model="contact.limit" type="number" min="1" class="form-control" placeholder="Number of row">
+                        <label for="row">How many row you want to show:</label>
+                        <input id="row" v-model="contact.limit" type="number" min="1" class="form-control" placeholder="Number of row">
+                        <small class="danger" v-if="error.limit">{{ error.limit }}</small>
                     </div>
                     <div class="mb-2">
-                        <label for="favcolor">Order By:</label><br>
-                        <select id="cars" v-model="contact.orderby" name="cars">
+                        <label for="orderBy">Order By:</label><br>
+                        <select id="orderBy" class="form-control" v-model="contact.orderby" name="cars">
                             <option value="id">ID</option>
                             <option value="name">Name</option>
                             <option value="email">Email</option>
@@ -38,20 +43,19 @@
                             <option value="company">Company</option>
                             <option value="title">Title</option>
                         </select>
+                        <small class="danger" v-if="error.orderby">{{ error.orderby }}</small>
                     </div>
-
-                    <div class="mb-2">
-                        <label for="favcolor">Hide Column:</label><br>
-                        <select id="cars" v-model="contact.column" name="cars">
-                            <option value="">None</option>
-                            <option value="id">ID</option>
-                            <option value="name">Name</option>
-                            <option value="email">Email</option>
-                            <option value="mobile">Mobile</option>
-                            <option value="company">Company</option>
-                            <option value="title">Title</option>
-                        </select>
-                    </div>
+                    <div>
+                        <label >Hide Column:</label><br>
+                        <input type="checkbox" id="id" value="ID" v-model="hideColumn">
+                        <label for="id">ID</label><br>
+                        <input type="checkbox" id="email" value="Email" v-model="hideColumn">
+                        <label for="email">Email</label><br>
+                        <input type="checkbox" id="company" value="Company" v-model="hideColumn">
+                        <label for="company">Company</label><br>
+                        <input type="checkbox" id="title" value="Title" v-model="hideColumn">
+                        <label for="title">Title</label>
+                    </div><br>
 
                     <div class="mb-2">
                         <input type="submit" class="btn btn-success" value="Change">
@@ -60,9 +64,9 @@
                 </form>
 
             </div>
-                <div class="col">
-                    <button class="btn btn-secondary" v-on:click="defaults('')">Default</button>
-                </div>
+            <div class="col">
+                <button class="btn btn-outline-secondary" v-on:click="defaults('')">Default</button>
+            </div>
         </div>
     </div>
 </div>
@@ -83,12 +87,14 @@ export default {
                 orderby: ''
             },
 
+            hideColumn: [],
+
             default: {
                 id: '1',
                 color: '#4CAF50',
                 limit: '5',
                 page: '3',
-                column: '',
+                column: '1',
                 orderby: 'id'
 
             },
@@ -126,7 +132,6 @@ export default {
                 },
                 success: function (data) {
                     that.contact = data.data[0];
-
                 }
             });
 
@@ -144,7 +149,7 @@ export default {
                     color: that.contact.color,
                     limit: that.contact.limit,
                     page: that.contact.page,
-                    column: that.contact.column,
+                    column: that.hideColumn,
                     orderby: that.contact.orderby,
                     wpsfb_nonce: ajax_url.wpsfb_nonce,
                 },
@@ -162,13 +167,21 @@ export default {
 
             this.contact = this.default;
 
+
         },
     }
 }
 </script>
 
 <style>
-.show-error {
+.danger {
     color: red;
+}
+.error{
+    color: red;
+}
+
+form label{
+  font-weight:bold;
 }
 </style>
