@@ -92,14 +92,10 @@
                 }
                 if((int)$page>1){
                     $prev = (float)$page-1;
-                    var_dump($prev);
-     
                     _e('<div class="pagination"><a href = '. $finalurl.'"?pageno='. $prev .'><</a></div>');
                 }
                 if((int)$page < $number_of_page){
                     $next = (float)$page+1;
-                    var_dump($next);
-
                     _e('<div class="pagination"><a href = '. $finalurl.'"?pageno='. $next  .'>></a></div>');  
                 }
                 for($page = 1; $page<= $number_of_page; $page++) { 

@@ -16,9 +16,8 @@
     </div>
 
     <div>
-        <h2 class="error">{{ error }}</h2>  
+        <h2 class="error">{{ error }}</h2>
     </div>
-   
     <div class="container mt-3">
         <div class="row">
             <div class="input-group input-group-lg">
@@ -46,7 +45,7 @@
                         <small class="danger" v-if="error.orderby">{{ error.orderby }}</small>
                     </div>
                     <div>
-                        <label >Hide Column:</label><br>
+                        <label>Hide Column:</label><br>
                         <input type="checkbox" id="id" value="ID" v-model="hideColumn">
                         <label for="id">ID</label><br>
                         <input type="checkbox" id="email" value="Email" v-model="hideColumn">
@@ -72,6 +71,8 @@
 </template>
 
 <script>
+
+
 export default {
     name: 'AddContact',
     data: function () {
@@ -84,9 +85,7 @@ export default {
                 column: '',
                 orderby: ''
             },
-
             hideColumn: [],
-
             default: {
                 id: '1',
                 color: '#4CAF50',
@@ -130,14 +129,16 @@ export default {
                 },
                 success: function (data) {
                     that.contact = data.data[0];
+                    that.hideColumn = that.contact.column
                 }
             });
 
         },
         submitChange() {
+
             const that = this;
             console.log(ajax_url.ajaxurl);
-           jQuery.ajax({
+            jQuery.ajax({
                 type: "POST",
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
@@ -162,10 +163,7 @@ export default {
         },
 
         defaults() {
-
             this.contact = this.default;
-
-
         },
     }
 }
@@ -175,11 +173,12 @@ export default {
 .danger {
     color: red;
 }
-.error{
+
+.error {
     color: red;
 }
 
-form label{
-  font-weight:bold;
+form label {
+    font-weight: bold;
 }
 </style>

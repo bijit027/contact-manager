@@ -146,6 +146,12 @@ class Models
         $request = $wpdb->get_results(
             "SELECT * FROM {$wpdb->prefix}settings"
         );
+          
+        foreach($request as $req){
+            $decode = unserialize(base64_decode($req->column));
+            $req->column = $decode;
+
+        }
         if (is_wp_error($request)) {
             return false;
         }
