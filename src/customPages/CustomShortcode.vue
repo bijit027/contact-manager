@@ -18,7 +18,6 @@
     <div>
         <h2 class="error">{{ error }}</h2>
     </div>
-    <pre>{{ hideColumn }}</pre>
     <div class="container mt-3">
         <div class="row">
             <div class="input-group input-group-lg">
@@ -169,6 +168,8 @@ export default {
 
         defaults() {
             this.contact = this.default;
+            this.hideColumn = [];
+            this.hideColumn.push("None");
         },
     }
 }
