@@ -18,6 +18,7 @@
     <div>
         <h2 class="error">{{ error }}</h2>
     </div>
+    <pre>{{ hideColumn }}</pre>
     <div class="container mt-3">
         <div class="row">
             <div class="input-group input-group-lg">
@@ -54,6 +55,10 @@
                         <label for="company">Company</label><br>
                         <input type="checkbox" id="title" value="Title" v-model="hideColumn">
                         <label for="title">Title</label>
+                        <div class="hide">
+                        <input type="checkbox" id="title" value="None" v-model="hideColumn">
+                        </div>
+                        
                     </div><br>
 
                     <div class="mb-2">
@@ -129,7 +134,7 @@ export default {
                 },
                 success: function (data) {
                     that.contact = data.data[0];
-                    that.hideColumn = that.contact.column
+                    that.hideColumn = that.contact.column;
                 }
             });
 
@@ -180,5 +185,8 @@ export default {
 
 form label {
     font-weight: bold;
+}
+.hide{
+    display: none;
 }
 </style>

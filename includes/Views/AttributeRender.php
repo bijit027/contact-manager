@@ -19,13 +19,13 @@
                 'title'     => 'Title',
             );
 
-            $column = unserialize(base64_decode($setting->column));
+            (array)$column = unserialize(base64_decode($setting->column));
             if(empty($column)){
                 $column = array('1');
             }
 
-            $alterHeader = array_diff($tableHeader, $column);
-            $lowerCaseColumn = array_map('strtolower', $column);
+            $alterHeader = array_diff($tableHeader, (array)$column);
+            $lowerCaseColumn = array_map('strtolower', (array)$column);
 
             foreach($contact_items as $items){
                 foreach($lowerCaseColumn as $col){

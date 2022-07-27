@@ -82,7 +82,7 @@ class Installer
             'color'     => '#4CAF50',
             'limit'     => '5',
             'page'      => '3',
-            'column'    => '1',
+            'column'    => 'YToxOntpOjA7czo0OiJOb25lIjt9',
             'orderby'   => 'id'
 
         ];
