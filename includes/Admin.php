@@ -28,15 +28,16 @@ class Admin
             'manage_options','contact-manager', 
             [ $this, 'admin_menu_page' ] );
             
-       $custom =  add_submenu_page( 'contact-manager',
+
+            $custom =  add_submenu_page( 'contact-manager',
             __( 'Settings', 'contact-manager' ), 
             __( 'Settings', 'contact-manager' ),
             'manage_options',
-            'contact-manager-settings', 
-            [ $this, 'admin_settings_page' ] );
+            'contact-manager#/settings', 
+            [ $this, 'admin_menu_page' ] );
 
         add_action('load-' . $hook, [$this, 'init_hooks']);
-        add_action('load-' . $custom, [$this, 'custom_hooks']);
+        add_action('load-' . $custom, [$this, 'init_hooks']);
     }
 
     public function init_hooks()
@@ -44,21 +45,12 @@ class Admin
         add_action('admin_enqueue_scripts', [$this, 'enqueue_scripts']);
     }
 
-    public function custom_hooks(){
-
-        add_action('admin_enqueue_scripts', [$this, 'custom_enqueue_scripts']);
-    }
-
     public function admin_menu_page()
     {
         echo '<div id="cm-admin-app"></div>';
     }
 
-    public function admin_settings_page()
-    {
-        echo '<div id="cm-custom-app"></div>';
-    }
-
+   
     public function enqueue_scripts()
     {
         wp_enqueue_style('fontawsome');
@@ -66,10 +58,5 @@ class Admin
         wp_enqueue_script('cm-admin-script');
         
     }
-    public function custom_enqueue_scripts(){
-
-        wp_enqueue_style('fontawsome');
-        wp_enqueue_style('bootstrap');
-        wp_enqueue_script('cm-custom-script');
-    }
+    
 }

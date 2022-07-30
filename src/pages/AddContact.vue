@@ -36,7 +36,7 @@ export default {
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
                 data: {
-                    action: "cm_insert_contact_table",
+                    action: "cm_insert_into_contact_table",
                     name: that.contact.name,
                     photo: that.contact.photo,
                     email: that.contact.email,
@@ -55,6 +55,7 @@ export default {
                     that.$router.push({
                         name: "ContactManager"
                     });
+                   
                 },
                 error: function (error) {
                     that.errors = error.responseJSON.data;

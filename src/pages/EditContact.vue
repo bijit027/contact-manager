@@ -59,7 +59,7 @@ export default {
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
                 data: {
-                    action: "cm_insert_contact_table",
+                    action: "cm_insert_into_contact_table",
                     id: that.contactId,
                     name: that.contact.name,
                     photo: that.contact.photo,

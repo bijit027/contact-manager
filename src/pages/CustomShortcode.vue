@@ -18,6 +18,7 @@
     <div>
         <h2 class="error">{{ error }}</h2>
     </div>
+    <pre>{{ hideColumn }}</pre>
     <div class="container mt-3">
         <div class="row">
             <div class="input-group input-group-lg">
@@ -32,36 +33,23 @@
                         <input id="row" v-model="contact.limit" type="number" min="1" class="form-control" placeholder="Number of row">
                         <small class="danger" v-if="error.limit">{{ error.limit }}</small>
                     </div>
+      
                     <div class="mb-2">
                         <label for="orderBy">Order By:</label><br>
-                        <select id="orderBy" class="form-control" v-model="contact.orderby" name="cars">
-                            <option value="id">ID</option>
-                            <option value="name">Name</option>
-                            <option value="email">Email</option>
-                            <option value="mobile">Mobile</option>
-                            <option value="company">Company</option>
-                            <option value="title">Title</option>
+                        <select id="orderBy" class="form-control" v-model="contact.orderby">
+                            <option v-for="value in orderby"  :value="value">{{ value }}</option>
                         </select>
                         <small class="danger" v-if="error.orderby">{{ error.orderby }}</small>
                     </div>
-                    <div>
-                        <label>Hide Column:</label><br>
-                        <input type="checkbox" id="id" value="ID" v-model="hideColumn">
-                        <label for="id">ID</label><br>
-                        <input type="checkbox" id="email" value="Email" v-model="hideColumn">
-                        <label for="email">Email</label><br>
-                        <input type="checkbox" id="company" value="Company" v-model="hideColumn">
-                        <label for="company">Company</label><br>
-                        <input type="checkbox" id="title" value="Title" v-model="hideColumn">
-                        <label for="title">Title</label>
-                        <div class="hide">
-                        <input type="checkbox" id="title" value="None" v-model="hideColumn">
-                        </div>
-                        
-                    </div><br>
+                    
+                    <div><label>Hide Column:</label><br>
+                        <span v-for="item in option_field">
+                            <input type="checkbox" :value="item" v-model="hideColumn"> <span class="checkbox-label"> {{item}} </span> <br>
+                        </span><br>
 
-                    <div class="mb-2">
-                        <input type="submit" class="btn btn-success" value="Change">
+                        <div class="mb-2">
+                            <input type="submit" class="btn btn-success" value="Save Changes">
+                        </div>
                     </div>
                 </form>
 
@@ -75,8 +63,6 @@
 </template>
 
 <script>
-
-
 export default {
     name: 'AddContact',
     data: function () {
@@ -90,6 +76,14 @@ export default {
                 orderby: ''
             },
             hideColumn: [],
+            orderby: [],
+            option_field: [],
+            all_field_name: [],
+            remove: [
+                "Name",
+                "Mobile",
+                "Photo",
+            ],
             default: {
                 id: '1',
                 color: '#4CAF50',
@@ -100,27 +94,51 @@ export default {
 
             },
             contacts: [],
+            contact_field: [],
             error: '',
             id: '1'
         }
     },
     created() {
 
-        // watch the params of the route to fetch the data again
-        this.$watch(
-            () => this.$route.params,
-            () => {
-                this.fetchData()
-            },
-            // fetch the data when the view is created and the data is
-            // already being observed
-            {
-                immediate: true
-            }
-        )
+        this.fetchData();
+        this.fetchColumn();
     },
 
     methods: {
+        capitalizeWords(arr) {
+            return arr.map(element => {
+                return element.charAt(0).toUpperCase() + element.slice(1).toLowerCase();
+            });
+        },
+        removeFromArray(original, remove) {
+            return original.filter(value => !remove.includes(value));
+        },
+
+        fetchColumn() {
+
+            const that = this;
+            jQuery.ajax({
+                type: "GET",
+                url: ajax_url.ajaxurl,
+                dataType: 'json',
+                data: {
+                    action: "cm_get_contact_lists",
+                },
+                success: function (data) {
+                    that.contact_field = data.data[1];
+
+                    that.all_field_name = Object.keys(that.contact_field);
+                    that.field_name = that.removeFromArray(that.all_field_name, that.remove);
+                    that.field_name = that.capitalizeWords(that.all_field_name);
+                    that.orderby = that.capitalizeWords(that.all_field_name);
+                    that.option_field = that.removeFromArray(that.field_name, that.remove);
+                    // console.log(that.option_field);
+
+                }
+            });
+
+        },
 
         fetchData() {
             const that = this;
@@ -132,9 +150,16 @@ export default {
                     action: "cm_get_shortcode_value",
                 },
                 success: function (data) {
-                    that.contact = data.data[0];
+
+                    that.contact = data.data;
                     that.hideColumn = that.contact.column;
-                }
+                    // that.option_field = Object.keys(that.contact);
+                    console.log(that.option_field);
+
+                },
+                error: function (error) {
+                    that.error = error.responseJSON.data;
+                },
             });
 
         },
@@ -147,7 +172,7 @@ export default {
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
                 data: {
-                    action: "cm_insert_shortcode_table",
+                    action: "cm_insert_into_shortcode_table",
                     id: that.id,
                     color: that.contact.color,
                     limit: that.contact.limit,
@@ -157,11 +182,13 @@ export default {
                     wpsfb_nonce: ajax_url.wpsfb_nonce,
                 },
                 success: function (data) {
+
                     that.mydata = data.data;
                     window.location.reload();
                 },
                 error: function (error) {
-                    that.error = error.responseJSON.data;
+                    console.log("Error in inerting data");
+                    that.error = error.responseJSON;
                 },
             });
         },
@@ -175,7 +202,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .danger {
     color: red;
 }
@@ -186,8 +213,10 @@ export default {
 
 form label {
     font-weight: bold;
+    color: black;
 }
-.hide{
+
+.hide {
     display: none;
 }
 </style>

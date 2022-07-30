@@ -5,6 +5,7 @@ import AddContact from "../pages/AddContact.vue";
 import EditContact from "../pages/EditContact.vue";
 import ViewContact from "../pages/ViewContact.vue";
 import PageNotFound from "../pages/PageNotFound.vue";
+import CustomShortcode from "../pages/CustomShortcode.vue";
 
 const routes = [
   {
@@ -12,6 +13,12 @@ const routes = [
     name: "Home",
     redirect: "/contacts",
     component: Home,
+  },
+  {
+    path: "/settings",
+    name: "CustomShortcode",
+
+    component: CustomShortcode,
   },
   {
     path: "/contacts/",

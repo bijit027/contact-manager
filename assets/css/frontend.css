@@ -33,6 +33,7 @@
 
   .pagination {
     display: inline-block;
+    margin-top: 10px;
   }
   
   .pagination a {
@@ -55,4 +56,13 @@
     color: white;
     border: 1px solid #4CAF50;
   }
- 
+.header{
+  color: white; 
+  padding-top: 12px; 
+  padding-bottom: 12px;
+  font-size: 160%;
+}
+.error{
+  color:red; 
+  border: 1px solid black
+}

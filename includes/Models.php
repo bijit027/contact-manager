@@ -4,158 +4,151 @@ namespace CM\Includes;
 
 class Models
 {
-    /**
-     * Insert data into contact table
-     */
-    public function add_contact_table($data)
-    {
-        global $wpdb;
+  /**
+   * Insert data into contact table
+   */
+  public function add_contact_data($data)
+  {
+    global $wpdb;
 
-        extract($data);
-        $defaults = [
+    extract($data);
+    $defaults = [
+      "name" => $name,
+      "photo" => $photo,
+      "email" => $email,
+      "mobile" => $mobile,
+      "company" => $company,
+      "title" => $title,
+    ];
+    $table_name = $wpdb->prefix . "contacts";
 
-            'name'    => $name,
-            'photo'   => $photo,
-            'email'   => $email,
-            'mobile'  => $mobile,
-            'company' => $company,
-            'title'   => $title,
+    $inserted = $wpdb->insert($table_name, $defaults);
 
-        ];
-        $table_name = $wpdb->prefix . 'contacts';
-
-        $inserted = $wpdb->insert(
-            $table_name,
-            $defaults
-        );
-
-        if (!$inserted) {
-            return wp_send_json_error("Error while posting data", 500);
-        }
-            return wp_send_json_success([
-                'message' => __("Successfully posted data", "contact-manager")
-            ], 200);   
+    if (!$inserted) {
+      return wp_send_json_error("Error while posting data", 500);
     }
+    return wp_send_json_success(
+      [
+        "message" => __("Successfully posted data", "contact-manager"),
+      ],
+      200
+    );
+  }
 
-    /**
-    * Update contact table
-    */
-    public function update_contact_table($id,$data){
-        global $wpdb;
-        extract($data);
-        $table_name   = $wpdb->prefix .  'contacts';
-        $where        = ['id' => $id];
+  /**
+   * Update contact table
+   */
+  public function update_contact_data($id, $data)
+  {
+    global $wpdb;
+    extract($data);
+    $table_name = $wpdb->prefix . "contacts";
+    $where = ["id" => $id];
 
-        $updated      =  $wpdb->update(
-            $table_name,
-            array(
-                'name'        => $name,
-                'photo'       => $photo,
-                'email'       => $email,
-                'mobile'      => $mobile,
-                'company'     => $company,
-                'title'       => $title,
-            ),
-            $where
-        );
-        if ( !$updated ) {
-            return wp_send_json_error( "Error while udpating data", 500 );
-        }
-        return wp_send_json_success( [
-            'message' => __( "Successfully update data", "textdomain" )
-        ], 200 );
-
+    $updated = $wpdb->update(
+      $table_name,
+      [
+        "name" => $name,
+        "photo" => $photo,
+        "email" => $email,
+        "mobile" => $mobile,
+        "company" => $company,
+        "title" => $title,
+      ],
+      $where
+    );
+    if (!$updated) {
+      return wp_send_json_error("Error while udpating data", 500);
     }
+    return wp_send_json_success(
+      [
+        "message" => __("Successfully update data", "textdomain"),
+      ],
+      200
+    );
+  }
 
-    /**
-    * Fetching data for contact table
-    */
-    public function get_all_contacts()
-    {
-        global $wpdb;
+  /**
+   * Fetching data for contact table
+   */
+  public function get_all_contacts()
+  {
+    global $wpdb;
 
-        $request = $wpdb->get_results(
-            "SELECT * FROM {$wpdb->prefix}contacts"
-        );
-        if (is_wp_error($request)) {
-            return false;
-        }
-            wp_send_json_success($request, 200);
-            die();
+    $request = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts");
+    if (is_wp_error($request)) {
+      return false;
     }
+    wp_send_json_success($request, 200);
+    die();
+  }
 
-    /**
-    * Get Single Data
-    */ 
-    public function fetch_single_data($id)
-    {
-        global $wpdb;
-        $post_id = $id;
+  /**
+   * Get Single Data
+   */
+  public function fetch_single_data($id)
+  {
+    global $wpdb;
+    $post_id = $id;
 
-        $single_data = $wpdb->get_results(
-            "SELECT * FROM {$wpdb->prefix}contacts WHERE id = {$post_id}"
-        );
+    $single_data = $wpdb->get_results(
+      "SELECT * FROM {$wpdb->prefix}contacts WHERE id = {$post_id}"
+    );
 
-        if (is_wp_error($single_data)) {
-            return false;
-        }
-            wp_send_json_success($single_data, 200);
-            die();
+    if (is_wp_error($single_data)) {
+      return false;
     }
+    wp_send_json_success($single_data, 200);
+    die();
+  }
 
-    /**
-    * Deleting Table's row
-    */
-    public function delete_contact($id)
-    {
-        global $wpdb;
-        $table_name = $wpdb->prefix . 'contacts';
-        $wpdb->delete($table_name, array('id' => $id));
-        die();
+  /**
+   * Deleting Table's row
+   */
+  public function delete_contact($id)
+  {
+    global $wpdb;
+    $table_name = $wpdb->prefix . "contacts";
+    $wpdb->delete($table_name, ["id" => $id]);
+    die();
+  }
+
+  public function customized_shortcode_value($data, $column)
+  {
+    extract($data);
+    // $newColumn = maybe_serialize($column);
+    $newColumn = $column;
+    $option_data = [
+      "color" => $color,
+      "limit" => $limit,
+      "page" => $page,
+      "column" => $newColumn,
+      "orderby" => $orderby,
+    ];
+
+    $updated = update_option("cm_settings_value", $option_data);
+
+    if (!$updated) {
+      return wp_send_json_error("Nothing to change", 500);
     }
+    return wp_send_json_success(
+      [
+        "message" => __("Successfully change shortcode", "contact-maneger"),
+      ],
+      200
+    );
+  }
 
-    public function custom_shortcode($data){
-        global $wpdb;
-        
-        extract($data);
-        $newColumn = base64_encode(serialize($column));
-        $table_name   = $wpdb->prefix .  'settings';
-        $where        = ['id' => $id];
-        $updated      =  $wpdb->update(
-            $table_name,
-            array(
-                'color'        => $color,
-                'limit'        => $limit,
-                'page'         => $page,
-                'column'       => $newColumn,
-                'orderby'      => $orderby,
-            ),
-            $where
-        );
-        if ( !$updated ) {
-            return wp_send_json_error( "Nothing to change", 500 );
-        }
-        return wp_send_json_success( [
-            'message' => __( "Successfully change shortcode", "contact-maneger" )
-        ], 200 );
+  public function get_shortcode_value()
+  {
+    global $wpdb;
+
+    $request = get_option("cm_settings_value");
+
+    if (is_wp_error($request)) {
+      return false;
     }
-
-    public function get_shortcode_value(){
-        global $wpdb;
-
-        $request = $wpdb->get_results(
-            "SELECT * FROM {$wpdb->prefix}settings"
-        );
-          
-        foreach($request as $req){
-            $decode = unserialize(base64_decode($req->column));
-            $req->column = $decode;
-
-        }
-        if (is_wp_error($request)) {
-            return false;
-        }
-            wp_send_json_success($request, 200);
-            die();
-    }
+    wp_send_json_success($request, 200);
+    die();
+  }
 }
