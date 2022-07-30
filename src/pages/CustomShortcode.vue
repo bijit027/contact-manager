@@ -16,7 +16,7 @@
     </div>
 
     <div>
-        <h2 class="error">{{ error }}</h2>
+        <h2 class="error">{{ error.data }}</h2>
     </div>
     <pre>{{ hideColumn }}</pre>
     <div class="container mt-3">
@@ -37,7 +37,7 @@
                     <div class="mb-2">
                         <label for="orderBy">Order By:</label><br>
                         <select id="orderBy" class="form-control" v-model="contact.orderby">
-                            <option v-for="value in orderby"  :value="value">{{ value }}</option>
+                            <option  v-for="value in orderby"  :value="value">{{ value }}</option>
                         </select>
                         <small class="danger" v-if="error.orderby">{{ error.orderby }}</small>
                     </div>

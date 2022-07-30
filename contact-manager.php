@@ -30,44 +30,44 @@ You should have received a copy of the GNU General Public License
 along with Awesome goal tracker. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 */
 
-if (!defined( 'ABSPATH')) {
-  exit;
+if (!defined("ABSPATH")) {
+    exit();
 }
 
-if (file_exists(__DIR__ . '/vendor/autoload.php')) {
-  require_once __DIR__ . '/vendor/autoload.php';
+if (file_exists(__DIR__ . "/vendor/autoload.php")) {
+    require_once __DIR__ . "/vendor/autoload.php";
 }
 
-final class Contact_Manager
+final class ContactManager
 {
     /**
      * Define Plugin Version
      */
-    const VERSION = '1.0.0';
+    const VERSION = "1.0.0";
 
     /**
      * Construct Function
      */
     public function __construct()
     {
-        $this->plugin_constants();
-        register_activation_hook(__FILE__, [$this, 'activate']);
-        register_deactivation_hook( __FILE__, [$this, 'deactivate']);
-        add_action('plugins_loaded', [$this, 'init_plugin']);
+        $this->pluginConstants();
+        register_activation_hook(__FILE__, [$this, "activate"]);
+        register_deactivation_hook(__FILE__, [$this, "deactivate"]);
+        add_action("plugins_loaded", [$this, "initPlugin"]);
     }
 
     /**
      * Plugin Constants
      * @since 1.0.0
      */
-    public function plugin_constants()
+    public function pluginConstants()
     {
-        define('CM_VERSION', self::VERSION);
-        define('CM_PLUGIN_PATH', trailingslashit(plugin_dir_path(__FILE__)));
-        define('CM_PLUGIN_URL', trailingslashit(plugins_url('', __FILE__)));
-        define('CM_ASSETS', CM_PLUGIN_URL . '/assets');
-        define('CM_CONTACTS_BASE_DIR', plugin_dir_url(__FILE__));
-        define('CM_CONTACTS_PATH', __DIR__);
+        define("CM_VERSION", self::VERSION);
+        define("CM_PLUGIN_PATH", trailingslashit(plugin_dir_path(__FILE__)));
+        define("CM_PLUGIN_URL", trailingslashit(plugins_url("", __FILE__)));
+        define("CM_ASSETS", CM_PLUGIN_URL . "/assets");
+        define("CM_CONTACTS_BASE_DIR", plugin_dir_url(__FILE__));
+        define("CM_CONTACTS_PATH", __DIR__);
     }
 
     /**
@@ -82,7 +82,7 @@ final class Contact_Manager
             $instance = new self();
         }
 
-            return $instance;
+        return $instance;
     }
 
     /**
@@ -101,14 +101,14 @@ final class Contact_Manager
      */
     public function deactivate()
     {
-      // On plugin deactivation
+        // On plugin deactivation
     }
 
     /**
      * Init Plugin
      * @since 1.0.0
      */
-    public function init_plugin()
+    public function initPlugin()
     {
         new \CM\Includes\Assets();
         new \CM\Includes\Models();
@@ -125,10 +125,10 @@ final class Contact_Manager
  * Initialize Main Plugin
  * @since 1.0.0
  */
-function Contact_Manger()
+function ContactManager()
 {
-    return Contact_Manager::init();
+    return ContactManager::init();
 }
 
 // Run the Plugin
-Contact_Manger();
+ContactManager();

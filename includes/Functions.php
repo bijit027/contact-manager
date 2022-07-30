@@ -1,40 +1,33 @@
 <?php
 
-function cm_get_contacts_by_id($items)
+function getContactsById($items)
 {
-  global $wpdb;
+    global $wpdb;
 
-  $id = $items;
-  $sql = $wpdb->get_results(
-    $wpdb->prepare("SELECT * FROM {$wpdb->prefix}contacts WHERE id=%s", $id)
-  );
-  return $sql;
+    $id = $items;
+    $sql = $wpdb->get_results(
+        $wpdb->prepare("SELECT * FROM {$wpdb->prefix}contacts WHERE id=%s", $id)
+    );
+    return $sql;
 }
 
-function cm_get_all_contacts()
+function GetAllContacts()
 {
-  global $wpdb;
+    global $wpdb;
 
-  $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts");
-  return $sql;
+    $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts");
+    return $sql;
 }
 
-function cm_get_shortcode_settings_value()
+function getPeginationData($page_first_result, $results_per_page, $orderby)
 {
-  global $wpdb;
-  $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}settings");
-  return $sql;
-}
+    $offset = $page_first_result;
+    $page = $results_per_page;
+    $orderby_value = strtolower($orderby);
 
-function cm_get_pegination_data($page_first_result, $results_per_page, $orderby)
-{
-  $offset = $page_first_result;
-  $page = $results_per_page;
-  $orderby_value = strtolower($orderby);
-
-  global $wpdb;
-  $sql = $wpdb->get_results(
-    "SELECT * FROM {$wpdb->prefix}contacts ORDER BY  $orderby_value  LIMIT $offset,$page"
-  );
-  return $sql;
+    global $wpdb;
+    $sql = $wpdb->get_results(
+        "SELECT * FROM {$wpdb->prefix}contacts ORDER BY  $orderby_value  LIMIT $offset,$page"
+    );
+    return $sql;
 }

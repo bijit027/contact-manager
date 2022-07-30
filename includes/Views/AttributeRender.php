@@ -1,12 +1,12 @@
 <div class='attribute' >
     <table id='contacts'>
         <caption class="header" style="background-color:<?php esc_html_e(
-          $color
+            $color
         ); ?>;">Contact List</caption>
         <tr>
             <?php foreach ($alterHeader as $item): ?>
                     <th style="background-color:<?php esc_html_e(
-                      $color
+                        $color
                     ); ?>"><?php esc_html_e($item); ?></th>
                 <?php endforeach; ?>             
         </tr>
@@ -48,51 +48,8 @@
             <?php endforeach; ?>              
     </table>
     <div>
-    <?php if ($separator != "withId") {
-      if ((int) $page > 1) {
-        $prev = (float) $page - 1;
-        _e(
-          '<div class="pagination"><a href = ' .
-            $finalurl .
-            "pageno=" .
-            $prev .
-            "><</a></div>"
-        );
-      }
-      if ((int) $page < $number_of_page) {
-        $next = (float) $page + 1;
-        _e(
-          '<div class="pagination"><a href = ' .
-            $finalurl .
-            "pageno=" .
-            $next .
-            ">></a></div>"
-        );
-      }
-      for ($page = 1; $page <= $number_of_page; $page++) {
-        if ($page == $current_page) {
-          _e(
-            '<div class="pagination"><a class="active" href = ' .
-              $finalurl .
-              "pageno=" .
-              $page .
-              ">" .
-              $page .
-              " </a></div>"
-          );
-        } else {
-          _e(
-            '<div class="pagination"><a class="" href = ' .
-              $finalurl .
-              "pageno=" .
-              $page .
-              ">" .
-              $page .
-              " </a></div>"
-          );
-        }
-      }
-    } ?>
-
+   <?php if ($separator != "withId") {
+       $content = include CM_CONTACTS_PATH . "/includes/Views/Pagination.php";
+   } ?>
     </div>
 </div>
