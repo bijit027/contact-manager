@@ -34,7 +34,7 @@ export default {
         InputForm
     },
 
-    created() {
+    mounted() {
         this.getSingleData();  
     },
 

@@ -31,19 +31,9 @@ class Assets
     {
         foreach ($scripts as $handle => $script) {
             $deps = isset($script["deps"]) ? $script["deps"] : false;
-            $in_footer = isset($script["in_footer"])
-                ? $script["in_footer"]
-                : false;
-            $version = isset($script["version"])
-                ? $script["version"]
-                : CM_VERSION;
-            wp_register_script(
-                $handle,
-                $script["src"],
-                $deps,
-                $version,
-                $in_footer
-            );
+            $in_footer = isset($script["in_footer"]) ? $script["in_footer"] : false;
+            $version = isset($script["version"]) ? $script["version"] : CM_VERSION;
+            wp_register_script($handle, $script["src"], $deps, $version, $in_footer);
         }
     }
 
@@ -61,17 +51,7 @@ class Assets
             "cm-admin-script" => [
                 "src" => CM_ASSETS . "/admin/admin.js",
                 "deps" => ["jquery"],
-                "version" => filemtime(
-                    CM_PLUGIN_PATH . "assets/admin/admin.js"
-                ),
-                "in_footer" => true,
-            ],
-            "cm-custom-script" => [
-                "src" => CM_ASSETS . "/admin/custom.js",
-                "deps" => ["jquery"],
-                "version" => filemtime(
-                    CM_PLUGIN_PATH . "assets/admin/custom.js"
-                ),
+                "version" => filemtime(CM_PLUGIN_PATH . "assets/admin/admin.js"),
                 "in_footer" => true,
             ],
         ];

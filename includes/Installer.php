@@ -52,7 +52,7 @@ class Installer
             "color" => "#4CAF50",
             "limit" => "5",
             "page" => "3",
-            "column" => "YToxOntpOjA7czo0OiJOb25lIjt9",
+            "column" => "None",
             "orderby" => "id",
             1,
             false,

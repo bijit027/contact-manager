@@ -7,7 +7,7 @@
                 <?php endforeach; ?>             
         </tr>
             
-        <?php foreach ($contact_items as $item): ?>
+        <?php foreach ($contactItems as $item): ?>
                 <tr> 
                     <?php if (!empty($item->id)) { ?> 
                         <td>
@@ -43,6 +43,9 @@
                     
             <?php endforeach; ?>              
     </table>
+    <!--
+        For pagination
+    -->
     <div>
    <?php if ($separator != "withId") {
        $content = include CM_CONTACTS_PATH . "/includes/Frontend/Pagination.php";

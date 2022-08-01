@@ -45,11 +45,11 @@
                         <small class="danger" v-if="error.orderby">{{ error.orderby }}</small>
                     </div>
 
-                    <div><label>Hide Column:</label><br>
+                    <div class="hideColumn"><label>Hide Column:</label><br>
                         <span v-for="item in conditionalHideColumn">
                             <input type="checkbox" :value="item" v-model="hideColumn"> <span class="checkbox-label"> {{item}} </span> <br>
                         </span>
-                    </div>
+                    </div><br>
 
                     <div class="mb-2">
                         <input type="submit" class="btn btn-success" value="Save Changes">
@@ -97,6 +97,9 @@ export default {
                 orderby: 'Name'
 
             },
+            // conditionalOrderby: [],
+
+            // conditionalHideColumn: [],
             contacts: [],
             contact_field: [],
             error: '',
@@ -104,7 +107,7 @@ export default {
             id: '1'
         }
     },
-    created() {
+    mounted() {
 
         this.fetchData();
         this.fetchColumn();
@@ -120,7 +123,6 @@ export default {
             return data;
 
         }
-
     },
 
     methods: {
@@ -150,6 +152,9 @@ export default {
                     that.field_name = that.removeFromArray(that.all_field_name, that.remove);
                     that.field_name = that.capitalizeWords(that.all_field_name);
                     that.orderby = that.capitalizeWords(that.all_field_name);
+                    that.orderby = that.orderby.filter(function (item) {
+                        return item !== 'Photo'
+                    })
                     that.option_field = that.removeFromArray(that.field_name, that.remove);
                 }
             });
@@ -208,7 +213,7 @@ export default {
                     setTimeout(function () {
                         that.error.error = false;
                     }, 2000);
-                    console.log(that.error.error);
+
                 },
             });
         },
@@ -238,5 +243,9 @@ form label {
 
 .hide {
     display: none;
+}
+.hideColumn{
+    overflow-y: scroll; 
+   height: 100px;
 }
 </style>

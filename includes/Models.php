@@ -47,11 +47,11 @@ class Models
     {
         global $wpdb;
         extract($data);
-        $table_name = $wpdb->prefix . "contacts";
+        $tableName = $wpdb->prefix . "contacts";
         $where = ["id" => $id];
 
         $updated = $wpdb->update(
-            $table_name,
+            $tableName,
             [
                 "name" => $name,
                 "photo" => $photo,
@@ -96,12 +96,12 @@ class Models
         global $wpdb;
         $post_id = $id;
 
-        $single_data = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts WHERE id = {$post_id}");
+        $singleData = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts WHERE id = {$post_id}");
 
-        if (is_wp_error($single_data)) {
+        if (is_wp_error($singleData)) {
             return false;
         }
-        wp_send_json_success($single_data, 200);
+        wp_send_json_success($singleData, 200);
         die();
     }
 
@@ -111,40 +111,49 @@ class Models
     public function deleteContact($id)
     {
         global $wpdb;
-        $table_name = $wpdb->prefix . "contacts";
-        $wpdb->delete($table_name, ["id" => $id]);
+        $tableName = $wpdb->prefix . "contacts";
+        $wpdb->delete($tableName, ["id" => $id]);
         die();
     }
 
     public function customizedShortcodeValue($data, $column)
     {
         extract($data);
-        // $newColumn = maybe_serialize($column);
         $newColumn = $column;
-        $option_data = [
+        $optionData = [
             "color" => $color,
             "limit" => $limit,
             "page" => $page,
             "column" => $newColumn,
             "orderby" => $orderby,
         ];
+        $request = get_option("cm_settings_value");
 
-        $updated = update_option("cm_settings_value", $option_data);
+        if ($optionData !== $request) {
+            $updated = update_option("cm_settings_value", $optionData);
 
-        if (!$updated) {
+            if (!$updated) {
+                return wp_send_json_error(
+                    [
+                        "error" => __("Error while updating data", "contact-manager"),
+                    ],
+                    500
+                );
+            }
+            return wp_send_json_success(
+                [
+                    "message" => __("Successfully change shortcode", "contact-manager"),
+                ],
+                200
+            );
+        } else {
             return wp_send_json_error(
                 [
-                    "error" => __("Nothing to change", "contact-maneger"),
+                    "error" => __("Nothing to change", "contact-manager"),
                 ],
                 500
             );
         }
-        return wp_send_json_success(
-            [
-                "message" => __("Successfully change shortcode", "contact-maneger"),
-            ],
-            200
-        );
     }
 
     public function fetchDataFromShortcode()

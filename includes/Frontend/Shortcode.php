@@ -54,7 +54,16 @@ class Shortcode
     public function renderAttributes($items, $separator)
     {
         $settings = get_option("cm_settings_value");
-        extract($settings);
+
+        $color = $settings["color"];
+        $limit = $settings["limit"];
+        $page = $settings["page"];
+        $orderby = $settings["orderby"];
+        $column = $settings["column"];
+        // var_dump($column);
+
+        // extract($settings);
+
         $this->loadAssets();
         if (empty($items)) {
             ob_start();
@@ -62,7 +71,7 @@ class Shortcode
             $error = ob_get_clean();
             return $error;
         } else {
-            $contact_items = $items;
+            $contactItems = $items;
 
             // extract($settings);
 
@@ -70,20 +79,20 @@ class Shortcode
                 //For pagination
                 if (!isset($_GET["pageno"])) {
                     $page = 1;
-                    $current_page = 1;
+                    $currentPage = 1;
                 } else {
                     $page = $_GET["pageno"];
-                    $current_page = $_GET["pageno"];
+                    $currentPage = $_GET["pageno"];
                 }
-                $shortcode_id = "not exist";
-                $results_per_page = $limit;
-                $page_first_result = ($page - 1) * $results_per_page;
-                $number_of_result = count($items);
+
+                $resultsPerPage = $limit;
+                $pageFirstResult = ($page - 1) * $resultsPerPage;
+                $countResult = count($items);
 
                 //determine the total number of pages available
-                $number_of_page = ceil($number_of_result / $results_per_page);
+                $numberOfPage = ceil($countResult / $resultsPerPage);
 
-                $contact_items = getPeginationData($page_first_result, $results_per_page, $orderby);
+                $contactItems = getDataForPegination($pageFirstResult, $resultsPerPage, $orderby);
 
                 $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                 $pageNumber = "?pageno=" . $_GET["pageno"];
@@ -126,7 +135,7 @@ class Shortcode
 
             // $contact_items = cm_get_pegination_data($page_first_result,$results_per_page,$orderby);
 
-            foreach ($contact_items as $items) {
+            foreach ($contactItems as $items) {
                 foreach ($lowerCaseColumn as $col) {
                     unset($items->$col);
                 }
