@@ -1,9 +1,7 @@
 <template>
 <div>
     <NavBar />
-    <router-view v-slot="{ Component }">
-        <component :is="Component" />
-    </router-view>
+    <router-view></router-view>
 </div>
 </template>
 

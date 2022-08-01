@@ -25,7 +25,12 @@ class Models
         $inserted = $wpdb->insert($table_name, $defaults);
 
         if (!$inserted) {
-            return wp_send_json_error("Error while posting data", 500);
+            return wp_send_json_error(
+                [
+                    "error" => __("Error while add data", "contact-manager"),
+                ],
+                500
+            );
         }
         return wp_send_json_success(
             [
@@ -91,9 +96,7 @@ class Models
         global $wpdb;
         $post_id = $id;
 
-        $single_data = $wpdb->get_results(
-            "SELECT * FROM {$wpdb->prefix}contacts WHERE id = {$post_id}"
-        );
+        $single_data = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts WHERE id = {$post_id}");
 
         if (is_wp_error($single_data)) {
             return false;
@@ -129,14 +132,16 @@ class Models
         $updated = update_option("cm_settings_value", $option_data);
 
         if (!$updated) {
-            return wp_send_json_error("Nothing to change", 500);
+            return wp_send_json_error(
+                [
+                    "error" => __("Nothing to change", "contact-maneger"),
+                ],
+                500
+            );
         }
         return wp_send_json_success(
             [
-                "message" => __(
-                    "Successfully change shortcode",
-                    "contact-maneger"
-                ),
+                "message" => __("Successfully change shortcode", "contact-maneger"),
             ],
             200
         );

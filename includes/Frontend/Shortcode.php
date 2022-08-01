@@ -17,10 +17,7 @@ class Shortcode
 
     public function loadAssets()
     {
-        wp_enqueue_style(
-            "contact_frontends_css",
-            CM_CONTACTS_BASE_DIR . "assets/css/frontend.css"
-        );
+        wp_enqueue_style("contact_frontends_css", CM_CONTACTS_BASE_DIR . "assets/css/frontend.css");
     }
 
     /**
@@ -42,20 +39,22 @@ class Shortcode
         $id = $atts["id"];
 
         if (!empty($atts["id"])) {
-            $settings = get_option("cm_settings_value");
+            // $settings = get_option("cm_settings_value");
             $items = getContactsById($id);
             $separator = "withId";
-            return $this->renderAttributes($items, $settings, $separator);
+            return $this->renderAttributes($items, $separator);
         } else {
-            $settings = get_option("cm_settings_value");
+            // $settings = get_option("cm_settings_value");
             $items = GetAllContacts();
             $separator = "withoutId";
-            return $this->renderAttributes($items, $settings, $separator);
+            return $this->renderAttributes($items, $separator);
         }
     }
 
-    public function renderAttributes($items, $settings, $separator)
+    public function renderAttributes($items, $separator)
     {
+        $settings = get_option("cm_settings_value");
+        extract($settings);
         $this->loadAssets();
         if (empty($items)) {
             ob_start();
@@ -65,7 +64,7 @@ class Shortcode
         } else {
             $contact_items = $items;
 
-            extract($settings);
+            // extract($settings);
 
             if ($separator != "withId") {
                 //For pagination
@@ -84,11 +83,7 @@ class Shortcode
                 //determine the total number of pages available
                 $number_of_page = ceil($number_of_result / $results_per_page);
 
-                $contact_items = getPeginationData(
-                    $page_first_result,
-                    $results_per_page,
-                    $orderby
-                );
+                $contact_items = getPeginationData($page_first_result, $results_per_page, $orderby);
 
                 $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                 $pageNumber = "?pageno=" . $_GET["pageno"];

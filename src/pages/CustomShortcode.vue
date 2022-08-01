@@ -15,10 +15,12 @@
         </div>
     </div>
 
-    <div>
-        <h2 class="error">{{ error.data }}</h2>
+    <div class="alert alert-danger" v-if="this.error.error" v-show="elementVisible" role="alert">
+        <h2>{{ this.error.error }}</h2>
     </div>
-    <pre>{{ hideColumn }}</pre>
+    <div class="alert alert-success" v-if="this.success.length" role="alert">
+        <h2>{{this.success}}</h2>
+    </div>
     <div class="container mt-3">
         <div class="row">
             <div class="input-group input-group-lg">
@@ -28,28 +30,29 @@
                         <input id="color" type="color" v-model="contact.color" class="form-control">
                         <small class="danger" v-if="error.color">{{ error.color }}</small>
                     </div>
+
                     <div class="mb-2">
                         <label for="row">How many row you want to show:</label>
                         <input id="row" v-model="contact.limit" type="number" min="1" class="form-control" placeholder="Number of row">
                         <small class="danger" v-if="error.limit">{{ error.limit }}</small>
                     </div>
-      
+
                     <div class="mb-2">
                         <label for="orderBy">Order By:</label><br>
                         <select id="orderBy" class="form-control" v-model="contact.orderby">
-                            <option  v-for="value in orderby"  :value="value">{{ value }}</option>
+                            <option v-for="value in conditionalOrderby" :value="value">{{ value }}</option>
                         </select>
                         <small class="danger" v-if="error.orderby">{{ error.orderby }}</small>
                     </div>
-                    
-                    <div><label>Hide Column:</label><br>
-                        <span v-for="item in option_field">
-                            <input type="checkbox" :value="item" v-model="hideColumn"> <span class="checkbox-label"> {{item}} </span> <br>
-                        </span><br>
 
-                        <div class="mb-2">
-                            <input type="submit" class="btn btn-success" value="Save Changes">
-                        </div>
+                    <div><label>Hide Column:</label><br>
+                        <span v-for="item in conditionalHideColumn">
+                            <input type="checkbox" :value="item" v-model="hideColumn"> <span class="checkbox-label"> {{item}} </span> <br>
+                        </span>
+                    </div>
+
+                    <div class="mb-2">
+                        <input type="submit" class="btn btn-success" value="Save Changes">
                     </div>
                 </form>
 
@@ -64,9 +67,10 @@
 
 <script>
 export default {
-    name: 'AddContact',
+
     data: function () {
         return {
+            elementVisible: true,
             contact: {
                 id: '',
                 color: '',
@@ -90,12 +94,13 @@ export default {
                 limit: '5',
                 page: '3',
                 column: '1',
-                orderby: 'id'
+                orderby: 'Name'
 
             },
             contacts: [],
             contact_field: [],
             error: '',
+            success: '',
             id: '1'
         }
     },
@@ -103,6 +108,19 @@ export default {
 
         this.fetchData();
         this.fetchColumn();
+    },
+    computed: {
+        conditionalOrderby() {
+            var data = this.removeFromArray(this.orderby, this.hideColumn);
+            return data;
+
+        },
+        conditionalHideColumn() {
+            var data = this.removeFromArray(this.option_field, this.contact.orderby);
+            return data;
+
+        }
+
     },
 
     methods: {
@@ -133,8 +151,6 @@ export default {
                     that.field_name = that.capitalizeWords(that.all_field_name);
                     that.orderby = that.capitalizeWords(that.all_field_name);
                     that.option_field = that.removeFromArray(that.field_name, that.remove);
-                    // console.log(that.option_field);
-
                 }
             });
 
@@ -153,8 +169,6 @@ export default {
 
                     that.contact = data.data;
                     that.hideColumn = that.contact.column;
-                    // that.option_field = Object.keys(that.contact);
-                    console.log(that.option_field);
 
                 },
                 error: function (error) {
@@ -183,12 +197,18 @@ export default {
                 },
                 success: function (data) {
 
+                    that.success = 'Updated value successfully';
+
                     that.mydata = data.data;
                     window.location.reload();
                 },
                 error: function (error) {
-                    console.log("Error in inerting data");
-                    that.error = error.responseJSON;
+
+                    that.error = error.responseJSON.data;
+                    setTimeout(function () {
+                        that.error.error = false;
+                    }, 2000);
+                    console.log(that.error.error);
                 },
             });
         },

@@ -21,7 +21,8 @@ export default {
                 title: '',
                 button: 'Create',
             },
-            errors: []
+            errors: [],
+            success: '',
         }
     },
     components: {
@@ -47,7 +48,9 @@ export default {
                 },
                 success: function (data) {
                     that.mydata = data.data;
+
                     if (data) {
+                       
                         that.$router.push({
                             name: "ContactManager"
                         });
@@ -55,10 +58,11 @@ export default {
                     that.$router.push({
                         name: "ContactManager"
                     });
-                   
+
                 },
                 error: function (error) {
                     that.errors = error.responseJSON.data;
+
                 },
             });
         }
@@ -72,7 +76,3 @@ export default {
     margin-left: 20px;
 }
 </style>
-
-
-
-

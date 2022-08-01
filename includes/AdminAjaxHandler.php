@@ -70,6 +70,7 @@ class AdminAjaxHandler extends Models
         $id = $_POST["id"];
         parent::deleteContact($id);
     }
+
     public function insertIntoShortcodeTable()
     {
         $value = ["id", "color", "limit", "page", "orderby"];
@@ -82,6 +83,7 @@ class AdminAjaxHandler extends Models
 
         parent::customizedShortcodeValue($data, $column);
     }
+
     public function getShortcodeValue()
     {
         parent::fetchDataFromShortcode();
@@ -98,6 +100,7 @@ class AdminAjaxHandler extends Models
         }
         return $data;
     }
+
     public function handleEmptyField($value)
     {
         $inputValue = $value;

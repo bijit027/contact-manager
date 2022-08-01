@@ -1,13 +1,9 @@
 <div class='attribute' >
     <table id='contacts'>
-        <caption class="header" style="background-color:<?php esc_html_e(
-            $color
-        ); ?>;">Contact List</caption>
+        <caption class="header" style="background-color:<?php esc_html_e($color); ?>;">Contact List</caption>
         <tr>
             <?php foreach ($alterHeader as $item): ?>
-                    <th style="background-color:<?php esc_html_e(
-                        $color
-                    ); ?>"><?php esc_html_e($item); ?></th>
+                    <th style="background-color:<?php esc_html_e($color); ?>"><?php esc_html_e($item); ?></th>
                 <?php endforeach; ?>             
         </tr>
             
@@ -49,7 +45,7 @@
     </table>
     <div>
    <?php if ($separator != "withId") {
-       $content = include CM_CONTACTS_PATH . "/includes/Views/Pagination.php";
+       $content = include CM_CONTACTS_PATH . "/includes/Frontend/Pagination.php";
    } ?>
     </div>
 </div>

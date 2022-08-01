@@ -34,8 +34,15 @@ export default {
         InputForm
     },
 
-    created: function () {
-        const that = this;
+    created() {
+        this.getSingleData();  
+    },
+
+    methods: {
+
+        getSingleData(){
+
+             const that = this;
         jQuery.ajax({
             type: "GET",
             url: ajax_url.ajaxurl,
@@ -49,9 +56,8 @@ export default {
                 that.contact.button = 'Update';
             }
         });
-    },
 
-    methods: {
+        },
         onSubmit() {
             const that = this;
             jQuery.ajax({
