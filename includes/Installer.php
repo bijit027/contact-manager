@@ -8,7 +8,6 @@ class Installer
     {
         $this->addVersion();
         $this->createContactsTable();
-
         $this->createOptionForSettings();
     }
 
@@ -46,7 +45,7 @@ class Installer
 
     public function createOptionForSettings()
     {
-        // array of options
+        // array  for options
         $defaults = [
             "id" => "1",
             "color" => "#4CAF50",
@@ -54,8 +53,6 @@ class Installer
             "page" => "3",
             "column" => [],
             "orderby" => "Id",
-            1,
-            false,
         ];
         // add a new option
         add_option("cm_settings_value", $defaults);

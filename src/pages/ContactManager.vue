@@ -21,7 +21,12 @@
         </div>
     </div>
 </div>
-
+<div class="alert alert-success" v-if="this.showSuccess.length" role="alert">
+    <h2>{{this.showSuccess}}</h2>
+</div>
+<div class="alert alert-danger" v-if="this.showError"  role="alert">
+    <h2>{{ this.showError }}</h2>
+</div>
 <div calss="container mt-3 " style="margin-left: 5%; width:100% " v-if="contacts.length > 0">
     <div class="row">
         <div class="col-md-6" v-for="contact of contacts" :key="contact">
@@ -30,7 +35,7 @@
                     <div class="row align-item-center">
                         <div class="col-sm-5">
                             <img :src="contact.photo" alt="" class="contact-img" />
-                        </div> 
+                        </div>
                         <div class="col-sm-6">
                             <b>[contact-code id="{{ contact.id }}"]</b>
                             <ul class="list-group">
@@ -77,17 +82,18 @@ export default {
             loading: false,
             contacts: [],
             errorMessage: null,
+            showSuccess: '',
+            showError: '',
 
         }
     },
 
     mounted() {
 
-            this.fetchData();
+        this.fetchData();
     },
 
     methods: {
-
         fetchData() {
             const that = this;
             jQuery.ajax({
@@ -99,13 +105,13 @@ export default {
                 },
                 success: function (data) {
                     that.contacts = data.data;
-
                 }
             });
 
         },
 
         clickDeleteContact: async function (contactID) {
+            const that = this;
             jQuery.ajax({
                 type: "POST",
                 url: ajax_url.ajaxurl,
@@ -115,15 +121,27 @@ export default {
                     id: contactID,
                     wpsfb_nonce: ajax_url.wpsfb_nonce,
                 },
+                success: function (data) {
+                    that.showSuccess = 'Value deleted successfully';
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 500);
+
+                },
+                error: function (error) {
+                    that.showError = 'Something went wrong';
+                    that.errors = error.responseJSON.data;
+
+                },
             });
-            window.location.reload();
+
         },
     }
 }
 </script>
 
 <style>
-.col-sm-1{
+.col-sm-1 {
     margin-top: 25px;
 }
 </style>

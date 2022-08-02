@@ -39,13 +39,11 @@ class Shortcode
         $id = $atts["id"];
 
         if (!empty($atts["id"])) {
-            // $settings = get_option("cm_settings_value");
             $items = getContactsById($id);
             $separator = "withId";
             return $this->renderAttributes($items, $separator);
         } else {
-            // $settings = get_option("cm_settings_value");
-            $items = GetAllContacts();
+            $items = getAllContacts();
             $separator = "withoutId";
             return $this->renderAttributes($items, $separator);
         }
@@ -60,9 +58,6 @@ class Shortcode
         $page = $settings["page"];
         $orderby = $settings["orderby"];
         $column = $settings["column"];
-        // var_dump($column);
-
-        // extract($settings);
 
         $this->loadAssets();
         if (empty($items)) {
@@ -72,8 +67,6 @@ class Shortcode
             return $error;
         } else {
             $contactItems = $items;
-
-            // extract($settings);
 
             if ($separator != "withId") {
                 //For pagination
@@ -125,15 +118,12 @@ class Shortcode
                 "title" => "Title",
             ];
 
-            // (array) ($column = maybe_unserialize($settings[0]->column));
             if (empty($column)) {
                 $column = ["1"];
             }
 
             $alterHeader = array_diff($tableHeader, (array) $column);
             $lowerCaseColumn = array_map("strtolower", (array) $column);
-
-            // $contact_items = cm_get_pegination_data($page_first_result,$results_per_page,$orderby);
 
             foreach ($contactItems as $items) {
                 foreach ($lowerCaseColumn as $col) {

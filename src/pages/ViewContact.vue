@@ -63,7 +63,11 @@ export default {
         }
     },
     mounted() {
-        const that = this;
+        this.fetchData();   
+    },
+    methods: {
+        fetchData(){
+            const that = this;
         jQuery.ajax({
             type: "GET",
             url: ajax_url.ajaxurl,
@@ -76,7 +80,9 @@ export default {
                 that.contacts = data.data;
             }
         });
-    },
+
+        }
+    }
 }
 </script>
 

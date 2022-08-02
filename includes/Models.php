@@ -95,7 +95,6 @@ class Models
     {
         global $wpdb;
         $post_id = $id;
-
         $singleData = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts WHERE id = {$post_id}");
 
         if (is_wp_error($singleData)) {
@@ -112,11 +111,28 @@ class Models
     {
         global $wpdb;
         $tableName = $wpdb->prefix . "contacts";
-        $wpdb->delete($tableName, ["id" => $id]);
-        die();
-    }
+        $delete = $wpdb->delete($tableName, ["id" => $id]);
 
-    public function customizedShortcodeValue($data, $column)
+        if (!$delete) {
+            return wp_send_json_error(
+                [
+                    "error" => __("Error while deleting data", "contact-manager"),
+                ],
+                500
+            );
+        }
+        return wp_send_json_success(
+            [
+                "message" => __("Successfully delete data", "contact-manager"),
+            ],
+            200
+        );
+    }
+    /**
+     * Update shorcode settings value
+     */
+
+    public function updateShortcodeSettings($data, $column)
     {
         extract($data);
         $newColumn = $column;
@@ -156,12 +172,10 @@ class Models
         }
     }
 
-    public function fetchDataFromShortcode()
+    public function fetchDataFromShortcodeSettings()
     {
         global $wpdb;
-
         $request = get_option("cm_settings_value");
-
         if (is_wp_error($request)) {
             return false;
         }

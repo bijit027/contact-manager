@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="alert alert-danger" v-if="this.error.error" v-show="elementVisible" role="alert">
+    <div class="alert alert-danger" v-if="this.error.error"  role="alert">
         <h2>{{ this.error.error }}</h2>
     </div>
     <div class="alert alert-success" v-if="this.success.length" role="alert">
@@ -147,7 +147,6 @@ export default {
                 },
                 success: function (data) {
                     that.contact_field = data.data[1];
-
                     that.all_field_name = Object.keys(that.contact_field);
                     that.field_name = that.removeFromArray(that.all_field_name, that.remove);
                     that.field_name = that.capitalizeWords(that.all_field_name);
@@ -171,10 +170,8 @@ export default {
                     action: "cm_get_shortcode_value",
                 },
                 success: function (data) {
-
                     that.contact = data.data;
                     that.hideColumn = that.contact.column;
-
                 },
                 error: function (error) {
                     that.error = error.responseJSON.data;
@@ -191,7 +188,7 @@ export default {
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
                 data: {
-                    action: "cm_insert_into_shortcode_table",
+                    action: "cm_insert_into_shortcode_settings",
                     id: that.id,
                     color: that.contact.color,
                     limit: that.contact.limit,
@@ -201,21 +198,17 @@ export default {
                     wpsfb_nonce: ajax_url.wpsfb_nonce,
                 },
                 success: function (data) {
-
                     that.success = 'Updated value successfully';
-
                     that.mydata = data.data;
                      setTimeout(function () {
                     window.location.reload();
                      }, 500);
                 },
                 error: function (error) {
-
                     that.error = error.responseJSON.data;
                     setTimeout(function () {
                         that.error.error = false;
                     }, 2000);
-
                 },
             });
         },
@@ -242,7 +235,6 @@ form label {
     font-weight: bold;
     color: black;
 }
-
 .hide {
     display: none;
 }

@@ -9,7 +9,7 @@ function getContactsById($items)
     return $sql;
 }
 
-function GetAllContacts()
+function getAllContacts()
 {
     global $wpdb;
 
@@ -17,13 +17,13 @@ function GetAllContacts()
     return $sql;
 }
 
-function getDataForPegination($page_first_result, $results_per_page, $orderby)
+function getDataForPegination($pageFirstResult, $resultsPerPage, $orderby)
 {
-    $offset = $page_first_result;
-    $page = $results_per_page;
-    $orderby_value = strtolower($orderby);
+    $offset = $pageFirstResult;
+    $page = $resultsPerPage;
+    $orderbyValue = strtolower($orderby);
 
     global $wpdb;
-    $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts ORDER BY  $orderby_value  LIMIT $offset,$page");
+    $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts ORDER BY  $orderbyValue  LIMIT $offset,$page");
     return $sql;
 }

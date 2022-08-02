@@ -4,8 +4,7 @@
     <div class="alert alert-success" v-if="this.showSuccess.length" role="alert">
         <h2>{{this.showSuccess}}</h2>
     </div>
-
-    <div class="alert alert-danger" v-if="this.showError" v-show="elementVisible" role="alert">
+    <div class="alert alert-danger" v-if="this.showError"  role="alert">
         <h2>{{ this.showError }}</h2>
     </div>
     <InputForm v-bind:contact="contact" v-bind:errors="errors" @form-submit="onSubmit" />
@@ -50,7 +49,6 @@ export default {
     methods: {
 
         getSingleData() {
-
             const that = this;
             jQuery.ajax({
                 type: "GET",

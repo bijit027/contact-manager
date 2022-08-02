@@ -22,8 +22,8 @@ class AdminAjaxHandler extends Models
             ],
             "cm_get_single_data" => ["function" => [$this, "getSingleData"]],
             "cm_delete_contact" => ["function" => [$this, "deleteContactData"]],
-            "cm_insert_into_shortcode_table" => [
-                "function" => [$this, "insertIntoShortcodeTable"],
+            "cm_insert_into_shortcode_settings" => [
+                "function" => [$this, "insertIntoShortcodeSettings"],
             ],
             "cm_get_shortcode_value" => [
                 "function" => [$this, "getShortcodeValue"],
@@ -38,9 +38,7 @@ class AdminAjaxHandler extends Models
         }
 
         $value = ["name", "photo", "email", "mobile", "company", "title"];
-
         $field_keys = $this->handleEmptyField($value);
-
         $data = $this->senitizeInputValue($field_keys);
 
         if (isset($_POST["id"])) {
@@ -71,22 +69,18 @@ class AdminAjaxHandler extends Models
         parent::deleteContact($id);
     }
 
-    public function insertIntoShortcodeTable()
+    public function insertIntoShortcodeSettings()
     {
         $value = ["id", "color", "limit", "page", "orderby"];
-
         $column = $_POST["column"];
-
         $field_keys = $this->handleEmptyField($value);
-
         $data = $this->senitizeInputValue($field_keys);
-
-        parent::customizedShortcodeValue($data, $column);
+        parent::updateShortcodeSettings($data, $column);
     }
 
     public function getShortcodeValue()
     {
-        parent::fetchDataFromShortcode();
+        parent::fetchDataFromShortcodeSettings();
     }
 
     public function senitizeInputValue($field_keys)
@@ -104,7 +98,6 @@ class AdminAjaxHandler extends Models
     public function handleEmptyField($value)
     {
         $inputValue = $value;
-
         $errors = [];
         foreach ($inputValue as $field_key) {
             if (empty($_POST[$field_key])) {
