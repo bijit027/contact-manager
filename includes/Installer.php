@@ -52,8 +52,8 @@ class Installer
             "color" => "#4CAF50",
             "limit" => "5",
             "page" => "3",
-            "column" => "None",
-            "orderby" => "id",
+            "column" => [],
+            "orderby" => "Id",
             1,
             false,
         ];

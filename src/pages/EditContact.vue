@@ -1,6 +1,13 @@
 <template>
 <div>
     <p class="h3 text-success fw-bold">Edit Contact</p>
+    <div class="alert alert-success" v-if="this.showSuccess.length" role="alert">
+        <h2>{{this.showSuccess}}</h2>
+    </div>
+
+    <div class="alert alert-danger" v-if="this.showError" v-show="elementVisible" role="alert">
+        <h2>{{ this.showError }}</h2>
+    </div>
     <InputForm v-bind:contact="contact" v-bind:errors="errors" @form-submit="onSubmit" />
 </div>
 </template>
@@ -27,6 +34,8 @@ export default {
             contacts: [],
             mydata: '',
             errors: [],
+            showSuccess: '',
+            showError: '',
         }
     },
 
@@ -35,27 +44,27 @@ export default {
     },
 
     mounted() {
-        this.getSingleData();  
+        this.getSingleData();
     },
 
     methods: {
 
-        getSingleData(){
+        getSingleData() {
 
-             const that = this;
-        jQuery.ajax({
-            type: "GET",
-            url: ajax_url.ajaxurl,
-            dataType: 'json',
-            data: {
-                action: "cm_get_single_data",
-                id: that.contactId
-            },
-            success: function (data) {
-                that.contact = data.data[0];
-                that.contact.button = 'Update';
-            }
-        });
+            const that = this;
+            jQuery.ajax({
+                type: "GET",
+                url: ajax_url.ajaxurl,
+                dataType: 'json',
+                data: {
+                    action: "cm_get_single_data",
+                    id: that.contactId
+                },
+                success: function (data) {
+                    that.contact = data.data[0];
+                    that.contact.button = 'Update';
+                }
+            });
 
         },
         onSubmit() {
@@ -77,12 +86,18 @@ export default {
                 },
 
                 success: function (data) {
+                    
+                    that.showSuccess = 'Update value successfully';
                     that.mydata = data.data;
+                       setTimeout(function () {
                     that.$router.push({
                         name: "ContactManager"
                     });
+                       }, 500);
                 },
+
                 error: function (error) {
+                    that.showError = 'Something went wrong';
                     that.errors = error.responseJSON.data;
                 },
 
