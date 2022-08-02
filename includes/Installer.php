@@ -14,8 +14,8 @@ class Installer
 
     public function addVersion()
     {
-        $is_installed = get_option("cm_is_installed");
-        if (!$is_installed) {
+        $isInstalled = get_option("cm_is_installed");
+        if (!$isInstalled) {
             update_option("cm_is_installed", time());
         }
         update_option("cm_version", CM_VERSION);
@@ -24,9 +24,9 @@ class Installer
     public function createContactsTable()
     {
         global $wpdb;
-        $charset_collate = $wpdb->get_charset_collate();
-        $table_name = $wpdb->prefix . "contacts";
-        $sql = "CREATE TABLE IF NOT EXISTS `$table_name` (
+        $charsetCollate = $wpdb->get_charset_collate();
+        $tableName = $wpdb->prefix . "contacts";
+        $sql = "CREATE TABLE IF NOT EXISTS `$tableName` (
             `id` int(10) NOT NULL AUTO_INCREMENT,
             `name` varchar(200) DEFAULT NULL,
             `photo` varchar(200) DEFAULT NULL,
@@ -36,7 +36,7 @@ class Installer
             `title` varchar(200) DEFAULT NULL,
             
             PRIMARY KEY(`id`)
-            ) $charset_collate;";
+            ) $charsetCollate;";
 
         if (!function_exists("dbDelta")) {
             require_once ABSPATH . "wp-admin/includes/upgrade.php";

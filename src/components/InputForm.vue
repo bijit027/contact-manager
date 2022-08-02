@@ -18,32 +18,32 @@
             <div class="col-md-4">
                 <form @submit.prevent="onSubmit">
                     <div class="mb-2">
-                        <label class="required">*</label><label>Enter your name</label>
+                        <label class="required">* </label><label>Name</label>
                         <input v-model="contact.name" type="text" class="form-control" placeholder="name">
                     </div>
                     <small class="danger" v-if="errors.name">{{ errors.name }}</small>
                     <div class="mb-2">
-                        <label class="required">*</label><label>Enter image url</label>
+                        <label class="required">*</label><label>Image url</label>
                         <input v-model="contact.photo" type="text" class="form-control" placeholder="Photo URL">
                     </div>
                     <small class="danger" v-if="errors.photo">{{ errors.photo }}</small>
                     <div class="mb-2">
-                        <label class="required">*</label><label>Enter email address</label>
+                        <label class="required">*</label><label>Email address</label>
                         <input v-model="contact.email" type="email" class="form-control" placeholder="Email">
                     </div>
                     <small class="danger" v-if="errors.email">{{ errors.email }}</small>
                     <div class="mb-2">
-                        <label class="required">*</label><label>Enter phone number</label>
+                        <label class="required">*</label><label>Phone number</label>
                         <input v-model="contact.mobile" type="number" class="form-control" placeholder="Mobile">
                     </div>
                     <small class="danger" v-if="errors.mobile">{{ errors.mobile }}</small>
                     <div class="mb-2">
-                        <label class="required">*</label><label>Enter company name</label>
+                        <label class="required">*</label><label>Company name</label>
                         <input v-model="contact.company" type="text" class="form-control" placeholder="Company">
                     </div>
                     <small class="danger" v-if="errors.company">{{ errors.company }}</small>
                     <div class="mb-2">
-                        <label class="required">*</label><label>Enter title</label>
+                        <label class="required">*</label><label>Title</label>
                         <input v-model="contact.title" type="text" class="form-control" placeholder="Title">
                     </div>
                     <small class="danger" v-if="errors.title">{{ errors.title }}</small>
@@ -81,5 +81,6 @@ export default {
 
 .required {
     color: red;
+    margin-right: 5px;
 }
 </style>
