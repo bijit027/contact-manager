@@ -64,7 +64,6 @@
                                 <i class="fa fa-trash"></i>
                             </button>
                         </div>
-
                     </div>
                 </div>
             </div>

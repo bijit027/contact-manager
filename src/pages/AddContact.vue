@@ -4,7 +4,6 @@
     <div class="alert alert-success" v-if="this.showSuccess.length" role="alert">
         <h2>{{this.showSuccess}}</h2>
     </div>
-
     <div class="alert alert-danger" v-if="this.showError"  role="alert">
         <h2>{{ this.showError }}</h2>
     </div>
@@ -69,7 +68,6 @@ export default {
                 error: function (error) {
                     that.showError = 'Something went wrong';
                     that.errors = error.responseJSON.data;
-
                 },
             });
         }

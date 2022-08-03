@@ -39,7 +39,6 @@
                 <li class="list-group-item">
                     Title : <span class="fw-bold">{{ contact.title }}</span>
                 </li>
-
             </ul>
         </div>
     </div>

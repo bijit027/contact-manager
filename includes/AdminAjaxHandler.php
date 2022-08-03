@@ -28,6 +28,9 @@ class AdminAjaxHandler extends Models
             "cm_get_shortcode_value" => [
                 "function" => [$this, "getShortcodeValue"],
             ],
+            "cm_get_contact_field_name" => [
+                "function" => [$this, "getFieldName"],
+            ],
         ];
     }
 
@@ -86,9 +89,7 @@ class AdminAjaxHandler extends Models
     public function senitizeInputValue($field_keys)
     {
         $inputValue = $field_keys;
-
         $data = [];
-
         foreach ($inputValue as $field_key) {
             $data[$field_key] = sanitize_text_field($_POST[$field_key]);
         }
@@ -109,5 +110,9 @@ class AdminAjaxHandler extends Models
         }
 
         return $inputValue;
+    }
+    public function getFieldName()
+    {
+        parent::fetchFieldName();
     }
 }

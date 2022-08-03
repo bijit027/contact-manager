@@ -45,7 +45,6 @@ class Installer
 
     public function createOptionForSettings()
     {
-        // array  for options
         $defaults = [
             "id" => "1",
             "color" => "#4CAF50",

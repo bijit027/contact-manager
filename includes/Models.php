@@ -182,4 +182,16 @@ class Models
         wp_send_json_success($request, 200);
         die();
     }
+
+    public function fetchFieldName()
+    {
+        global $wpdb;
+
+        $request = $wpdb->get_results("SHOW COLUMNS FROM {$wpdb->prefix}contacts");
+        if (is_wp_error($request)) {
+            return false;
+        }
+        wp_send_json_success($request, 200);
+        die();
+    }
 }

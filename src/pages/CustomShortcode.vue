@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="alert alert-danger" v-if="this.error.error"  role="alert">
+    <div class="alert alert-danger" v-if="this.error.error" role="alert">
         <h2>{{ this.error.error }}</h2>
     </div>
     <div class="alert alert-success" v-if="this.success.length" role="alert">
@@ -81,8 +81,8 @@ export default {
             },
             hideColumn: [],
             orderby: [],
-            option_field: [],
-            all_field_name: [],
+            optionField: [],
+            allFieldName: [],
             remove: [
                 "Name",
                 "Mobile",
@@ -93,15 +93,12 @@ export default {
                 color: '#4CAF50',
                 limit: '5',
                 page: '3',
-                column: '1',
+                column: [],
                 orderby: 'Name'
 
             },
-            // conditionalOrderby: [],
 
-            // conditionalHideColumn: [],
             contacts: [],
-            contact_field: [],
             error: '',
             success: '',
             id: '1'
@@ -119,7 +116,7 @@ export default {
 
         },
         conditionalHideColumn() {
-            var data = this.removeFromArray(this.option_field, this.contact.orderby);
+            var data = this.removeFromArray(this.optionField, this.contact.orderby);
             return data;
 
         }
@@ -134,7 +131,30 @@ export default {
         removeFromArray(original, remove) {
             return original.filter(value => !remove.includes(value));
         },
+        // fetchColumn() {
 
+        //     const that = this;
+        //     jQuery.ajax({
+        //         type: "GET",
+        //         url: ajax_url.ajaxurl,
+        //         dataType: 'json',
+        //         data: {
+        //             action: "cm_get_contact_lists",
+        //         },
+        //         success: function (data) {
+        //             that.contact_field = data.data[1];
+        //             that.all_field_name = Object.keys(that.contact_field);
+        //             that.field_name = that.removeFromArray(that.all_field_name, that.remove);
+        //             that.field_name = that.capitalizeWords(that.all_field_name);
+        //             that.orderby = that.capitalizeWords(that.all_field_name);
+        //             that.orderby = that.orderby.filter(function (item) {
+        //                 return item !== 'Photo'
+        //             })
+        //             that.optionField = that.removeFromArray(that.field_name, that.remove);
+        //         }
+        //     });
+
+        // },
         fetchColumn() {
 
             const that = this;
@@ -143,18 +163,17 @@ export default {
                 url: ajax_url.ajaxurl,
                 dataType: 'json',
                 data: {
-                    action: "cm_get_contact_lists",
+                    action: "cm_get_contact_field_name",
                 },
                 success: function (data) {
-                    that.contact_field = data.data[1];
-                    that.all_field_name = Object.keys(that.contact_field);
-                    that.field_name = that.removeFromArray(that.all_field_name, that.remove);
-                    that.field_name = that.capitalizeWords(that.all_field_name);
-                    that.orderby = that.capitalizeWords(that.all_field_name);
-                    that.orderby = that.orderby.filter(function (item) {
+                    that.allFieldName = data.data.map(function (item) {
+                        return item.Field;
+                    });
+                    that.capitalizedFieldName = that.capitalizeWords(that.allFieldName);
+                    that.orderby = that.capitalizedFieldName.filter(function (item) {
                         return item !== 'Photo'
-                    })
-                    that.option_field = that.removeFromArray(that.field_name, that.remove);
+                    });
+                    that.optionField = that.removeFromArray(that.capitalizedFieldName , that.remove);
                 }
             });
 
@@ -200,9 +219,9 @@ export default {
                 success: function (data) {
                     that.success = 'Updated value successfully';
                     that.mydata = data.data;
-                     setTimeout(function () {
-                    window.location.reload();
-                     }, 500);
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 500);
                 },
                 error: function (error) {
                     that.error = error.responseJSON.data;
@@ -235,11 +254,13 @@ form label {
     font-weight: bold;
     color: black;
 }
+
 .hide {
     display: none;
 }
-.hideColumn{
-    overflow-y: scroll; 
-   height: 100px;
+
+.hideColumn {
+    overflow-y: scroll;
+    height: 100px;
 }
 </style>

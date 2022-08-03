@@ -106,9 +106,7 @@ class Shortcode
                     }
                 }
             }
-
             // For table header
-
             $tableHeader = [
                 "id" => "Id",
                 "name" => "Name",
