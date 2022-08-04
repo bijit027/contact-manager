@@ -50,7 +50,7 @@ class Installer
             "color" => "#4CAF50",
             "limit" => "5",
             "page" => "3",
-            "column" => [],
+            "column" => ["None"],
             "orderby" => "Id",
         ];
         // add a new option
