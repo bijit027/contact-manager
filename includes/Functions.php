@@ -24,6 +24,7 @@ function getDataForPegination($pageFirstResult, $resultsPerPage, $orderby)
     $orderbyValue = strtolower($orderby);
 
     global $wpdb;
+
     $sql = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}contacts ORDER BY  $orderbyValue  LIMIT $offset,$page");
     return $sql;
 }

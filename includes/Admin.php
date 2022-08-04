@@ -30,7 +30,7 @@ class Admin
             [$this, "adminMenuPage"]
         );
 
-        $custom = add_submenu_page(
+        $settings = add_submenu_page(
             "contact-manager",
             __("Settings", "contact-manager"),
             __("Settings", "contact-manager"),
@@ -40,7 +40,7 @@ class Admin
         );
 
         add_action("load-" . $hook, [$this, "initHooks"]);
-        add_action("load-" . $custom, [$this, "initHooks"]);
+        add_action("load-" . $settings, [$this, "initHooks"]);
     }
 
     public function initHooks()

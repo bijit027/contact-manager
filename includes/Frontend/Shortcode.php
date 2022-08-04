@@ -52,7 +52,6 @@ class Shortcode
     public function renderAttributes($items, $separator)
     {
         $settings = get_option("cm_settings_value");
-
         $color = $settings["color"];
         $limit = $settings["limit"];
         $page = $settings["page"];

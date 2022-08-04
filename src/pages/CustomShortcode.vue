@@ -113,12 +113,10 @@ export default {
         conditionalOrderby() {
             var data = this.removeFromArray(this.orderby, this.hideColumn);
             return data;
-
         },
         conditionalHideColumn() {
             var data = this.removeFromArray(this.optionField, this.contact.orderby);
             return data;
-
         }
     },
 
@@ -131,32 +129,7 @@ export default {
         removeFromArray(original, remove) {
             return original.filter(value => !remove.includes(value));
         },
-        // fetchColumn() {
-
-        //     const that = this;
-        //     jQuery.ajax({
-        //         type: "GET",
-        //         url: ajax_url.ajaxurl,
-        //         dataType: 'json',
-        //         data: {
-        //             action: "cm_get_contact_lists",
-        //         },
-        //         success: function (data) {
-        //             that.contact_field = data.data[1];
-        //             that.all_field_name = Object.keys(that.contact_field);
-        //             that.field_name = that.removeFromArray(that.all_field_name, that.remove);
-        //             that.field_name = that.capitalizeWords(that.all_field_name);
-        //             that.orderby = that.capitalizeWords(that.all_field_name);
-        //             that.orderby = that.orderby.filter(function (item) {
-        //                 return item !== 'Photo'
-        //             })
-        //             that.optionField = that.removeFromArray(that.field_name, that.remove);
-        //         }
-        //     });
-
-        // },
         fetchColumn() {
-
             const that = this;
             jQuery.ajax({
                 type: "GET",
@@ -176,7 +149,6 @@ export default {
                     that.optionField = that.removeFromArray(that.capitalizedFieldName , that.remove);
                 }
             });
-
         },
 
         fetchData() {

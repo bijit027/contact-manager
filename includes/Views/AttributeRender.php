@@ -3,8 +3,8 @@
         <caption class="header" style="background-color:<?php esc_html_e($color); ?>;">Contact List</caption>
         <tr>
             <?php foreach ($alterHeader as $item): ?>
-                    <th style="background-color:<?php esc_html_e($color); ?>"><?php esc_html_e($item); ?></th>
-                <?php endforeach; ?>             
+                <th style="background-color:<?php esc_html_e($color); ?>"><?php esc_html_e($item); ?></th>
+            <?php endforeach; ?>             
         </tr>
             
         <?php foreach ($contactItems as $item): ?>
@@ -48,7 +48,7 @@
     -->
     <div>
    <?php if ($separator != "withId") {
-       $content = include CM_CONTACTS_PATH . "/includes/Frontend/Pagination.php";
+       $pagination = include CM_CONTACTS_PATH . "/includes/Frontend/Pagination.php";
    } ?>
     </div>
 </div>

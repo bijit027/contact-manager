@@ -183,6 +183,9 @@ class Models
         die();
     }
 
+    /**
+     *Fetching field name from contact table
+     */
     public function fetchFieldName()
     {
         global $wpdb;

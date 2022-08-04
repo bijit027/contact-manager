@@ -22,15 +22,6 @@
     /* background-color: blue; */
     color: white;
   }
-
-  /* #contacts caption{
-    background-color: #198754;
-    color: white;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    
-  } */
-
   .pagination {
     display: inline-block;
     margin-top: 10px;
@@ -66,3 +57,4 @@
   color:red; 
   border: 1px solid black
 }
+
