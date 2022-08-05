@@ -192,7 +192,7 @@ export default {
                     that.success = 'Updated value successfully';
                     that.mydata = data.data;
                     setTimeout(function () {
-                        window.location.reload();
+                        that.success = false;
                     }, 500);
                 },
                 error: function (error) {
