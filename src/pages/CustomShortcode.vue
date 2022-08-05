@@ -44,13 +44,14 @@
                         </select>
                         <small class="danger" v-if="error.orderby">{{ error.orderby }}</small>
                     </div>
-
-                    <div class="hideColumn"><label>Hide Column:</label><br>
+                    <div><label>Hide Column:</label>
+                    <div class="hideColumn">
                         <span v-for="item in conditionalHideColumn">
                             <input type="checkbox" :value="item" v-model="hideColumn"> <span class="checkbox-label"> {{item}} </span> <br>
                         </span>
+                    </div>
                     </div><br>
-
+                    
                     <div class="mb-2">
                         <input type="submit" class="btn btn-success" value="Save Changes">
                     </div>
@@ -233,6 +234,6 @@ form label {
 
 .hideColumn {
     overflow-y: scroll;
-    height: 100px;
+    height: 80px;
 }
 </style>

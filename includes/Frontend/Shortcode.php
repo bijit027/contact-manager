@@ -105,15 +105,11 @@ class Shortcode
                     }
                 }
             }
-            // For table header
-            $tableHeader = [
-                "id" => "Id",
-                "name" => "Name",
-                "email" => "Email",
-                "mobile" => "Mobile",
-                "company" => "Company",
-                "title" => "Title",
-            ];
+            //$tableHeader array contains field name
+            foreach ($items[0] as $field_key => $value) {
+                $tableHeader[$field_key] = ucfirst($field_key);
+            }
+            unset($tableHeader["photo"]);
 
             if (empty($column)) {
                 $column = ["1"];
