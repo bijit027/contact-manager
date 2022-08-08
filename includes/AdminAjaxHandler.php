@@ -36,7 +36,7 @@ class AdminAjaxHandler extends Models
 
     public function insertIntoContactTable()
     {
-        if (!wp_verify_nonce($_POST["wpsfb_nonce"], "wpsfb_ajax_nonce")) {
+        if (!wp_verify_nonce($_POST["cm_nonce"], "cm_ajax_nonce")) {
             return wp_send_json_error("Busted! Please login!", 400);
         }
 
@@ -65,7 +65,7 @@ class AdminAjaxHandler extends Models
 
     public function deleteContactData()
     {
-        if (!wp_verify_nonce($_POST["wpsfb_nonce"], "wpsfb_ajax_nonce")) {
+        if (!wp_verify_nonce($_POST["cm_nonce"], "cm_ajax_nonce")) {
             return wp_send_json_error("Busted! Please login!", 400);
         }
         $id = $_POST["id"];

@@ -117,7 +117,7 @@ export default {
                 data: {
                     action: "cm_delete_contact",
                     id: contactID,
-                    wpsfb_nonce: ajax_url.wpsfb_nonce,
+                    cm_nonce: ajax_url.cm_nonce,
                 },
                 success: function (data) {
                     that.showSuccess = 'Value deleted successfully';

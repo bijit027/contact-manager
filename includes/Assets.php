@@ -18,12 +18,9 @@ class Assets
         $this->registerScripts($this->getScripts());
         wp_localize_script("cm-admin-script", "ajax_url", [
             "ajaxurl" => admin_url("admin-ajax.php"),
-            "wpsfb_nonce" => wp_create_nonce("wpsfb_ajax_nonce"),
+            "cm_nonce" => wp_create_nonce("cm_ajax_nonce"),
         ]);
-        wp_localize_script("cm-custom-script", "ajax_url", [
-            "ajaxurl" => admin_url("admin-ajax.php"),
-            "wpsfb_nonce" => wp_create_nonce("wpsfb_ajax_nonce"),
-        ]);
+
         $this->registerStyles($this->getStyles());
     }
 

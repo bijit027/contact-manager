@@ -187,7 +187,7 @@ export default {
                     page: that.contact.page,
                     column: that.hideColumn,
                     orderby: that.contact.orderby,
-                    wpsfb_nonce: ajax_url.wpsfb_nonce,
+                    cm_nonce: ajax_url.cm_nonce,
                 },
                 success: function (data) {
                     that.success = 'Updated value successfully';

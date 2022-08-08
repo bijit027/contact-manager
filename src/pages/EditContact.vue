@@ -80,7 +80,7 @@ export default {
                     mobile: that.contact.mobile,
                     company: that.contact.company,
                     title: that.contact.title,
-                    wpsfb_nonce: ajax_url.wpsfb_nonce,
+                    cm_nonce: ajax_url.cm_nonce,
                 },
 
                 success: function (data) {
